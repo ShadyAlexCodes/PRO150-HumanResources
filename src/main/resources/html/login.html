@@ -1,29 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login Page</title>
-</head>
-<body>
-<Text>Login</Text>
+    <head>
+        <meta charset="UTF-8">
+        <title>Login Page</title>
+    </head>
 
-<div>
-    <label>Username: </label>
-    <input type="text" required/>
-    <br/>
-    <label>Email: </label>
-    <input type="text" required/>
-    <br/>
-    <label>Password: </label>
-    <input type="text" required />
-    <br/>
+    <body>
+        <form action="/action_page.php">
+            <label for="userName">Username</label>
+            <input type="text" id="userName" name="userName" placeholder="userName" required><br><br>
 
+            <label for="psw">Password:</label>
+            <input type="password" id="psw" name="psw" placeholder="password" required><br><br>
 
-    <button onclick="">Log in</button>
+            <input type="submit" value="Submit">
 
+        </form>
 
-</div>
+    <p>  if you're not a user, try registering </p>
+        <a href="#">here!</a>
 
-
-</body>
+        <!--        to register page-->
+    </body>
 </html>
