@@ -20,9 +20,9 @@ public class EmployeeRestController {
         return employeeLogicLayer.findAllEmployees();
     }
 
-    @GetMapping(path="/")
-    public void testData() throws IOException {
-        System.out.println("Path was hit");
+    @GetMapping(path="/test")
+    public String employeeRoute() throws IOException {
+        return "My path was hit!";
     }
 
 }

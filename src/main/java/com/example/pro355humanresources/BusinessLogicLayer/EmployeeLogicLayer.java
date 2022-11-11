@@ -7,7 +7,6 @@ import java.util.List;
 
 public class EmployeeLogicLayer {
 
-
     public List<Employee> findAllEmployees() throws IOException {
         return null;
     }
