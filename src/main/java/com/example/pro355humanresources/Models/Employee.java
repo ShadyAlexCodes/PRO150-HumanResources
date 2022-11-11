@@ -1,12 +1,15 @@
 package com.example.pro355humanresources.Models;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 
-public abstract class Employee {
 
-    @Id int employeeId;
+@Document(collection = "Employees")
+public class Employee {
+
     private String employeeFirstName;
     private String employeeLastName;
     private String employeeEmail;
@@ -15,28 +18,33 @@ public abstract class Employee {
     private boolean employeeStatus;
     private String createdDate;
     private String modifiedDate;
+    private Address employeeAddress;
 
     public Employee() {
     }
 
-    public Employee(int employeeId, String employeeFirstName, String employeeLastName, String employeeEmail, int employeeSSN, double employeeSalary, boolean employeeStatus, String createdDate) {
-        this.employeeId = employeeId;
+    public Employee(String employeeFirstName, String employeeLastName) {
+        this.employeeFirstName = employeeFirstName;
+        this.employeeLastName = employeeLastName;
+        this.createdDate = LocalDateTime.now().toString();
+    }
+
+    public Employee(String employeeFirstName, String employeeLastName, Address employeeAddress) {
+        this.employeeFirstName = employeeFirstName;
+        this.employeeLastName = employeeLastName;
+        this.employeeAddress = employeeAddress;
+        this.createdDate = LocalDateTime.now().toString();
+    }
+
+    public Employee(String employeeFirstName, String employeeLastName, String employeeEmail, int employeeSSN, double employeeSalary, boolean employeeStatus, Address employeeAddress) {
         this.employeeFirstName = employeeFirstName;
         this.employeeLastName = employeeLastName;
         this.employeeEmail = employeeEmail;
         this.employeeSSN = employeeSSN;
         this.employeeSalary = employeeSalary;
         this.employeeStatus = employeeStatus;
-        this.createdDate = createdDate;
-        this.modifiedDate = modifiedDate;
-    }
-
-    public int getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+        //this.employeeAddress = employeeAddress;
+        this.createdDate = LocalDateTime.now().toString();
     }
 
     public String getEmployeeFirstName() {
@@ -103,18 +111,9 @@ public abstract class Employee {
         this.modifiedDate = modifiedDate;
     }
 
+
     @Override
     public String toString() {
-        return "Employee{" +
-                "employeeId=" + employeeId +
-                ", employeeFirstName='" + employeeFirstName + '\'' +
-                ", employeeLastName='" + employeeLastName + '\'' +
-                ", employeeEmail='" + employeeEmail + '\'' +
-                ", employeeSSN=" + employeeSSN +
-                ", employeeSalary=" + employeeSalary +
-                ", employeeStatus=" + employeeStatus +
-                ", createdDate='" + createdDate + '\'' +
-                ", modifiedDate='" + modifiedDate + '\'' +
-                '}';
+        return "Employee{ employeeFirstName='" + employeeFirstName + '\'' + ", employeeLastName='" + employeeLastName + '\'' + ", employeeEmail='" + employeeEmail + '\'' + ", employeeSSN=" + employeeSSN + ", employeeSalary=" + employeeSalary + ", employeeStatus=" + employeeStatus + ", createdDate='" + createdDate + '\'' + ", modifiedDate='" + modifiedDate + '\'' + '}';
     }
 }

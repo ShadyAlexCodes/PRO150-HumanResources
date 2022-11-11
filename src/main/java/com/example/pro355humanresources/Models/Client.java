@@ -7,5 +7,4 @@ public class Client {
     private String password;
     private String createdDate;
     private String modifiedDate;
-
 }
