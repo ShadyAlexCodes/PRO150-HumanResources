@@ -1,4 +1,28 @@
 package com.example.pro355humanresources.RestController;
 
+import com.example.pro355humanresources.BusinessLogicLayer.EmployeeLogicLayer;
+import com.example.pro355humanresources.Models.Employee;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api")
 public class EmployeeRestController {
+
+    private EmployeeLogicLayer employeeLogicLayer;
+
+    @GetMapping(path="/employees")
+    public List<Employee> findAllEmployees() throws IOException {
+        return employeeLogicLayer.findAllEmployees();
+    }
+
+    @GetMapping(path="/")
+    public void testData() throws IOException {
+        System.out.println("Path was hit");
+    }
+
 }
