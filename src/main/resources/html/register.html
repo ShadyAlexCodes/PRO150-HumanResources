@@ -1,11 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register Page</title>
-</head>
-<body>
-<Text>Register</Text>
+    <head>
+        <meta charset="UTF-8">
+        <title>Register Page</title>
+    </head>
 
-</body>
+    <body>
+    // action_page.php is the file where the form data will be sent for processing, dose not exist rn
+        <form action="/action_page.php">
+            <label for="fname">First name:</label>
+            <input type="text" id="fname" name="fname" required><br><br>
+
+            <label for="lname">Last name:</label>
+            <input type="text" id="lname" name="lname" required><br><br>
+
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" required><br><br>
+
+            <label for="ssn">Email:</label>
+            <input type="text" id="ssn" name="ssn" required><br><br>
+
+            <label for="pwd">Password:</label>
+            <input type="password" id="pwd" name="pwd" required><br><br>
+
+            <label>Address:</label>
+
+            <label for="street">Street:</label>
+            <input type="text" id="street" name="street" required><br><br>
+
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" required><br><br>
+
+            <label for="state">State:</label>
+            <input type="text" id="state" name="state" required><br><br>
+
+            <label for="zipCode">Zip-Code:</label>
+            <input type="text" id="zipCode" name="zipCode" required><br><br>
+
+            <input type="submit" value="Submit">
+        </form>
+    </body>
 </html>
