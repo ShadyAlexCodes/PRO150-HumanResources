@@ -2,11 +2,55 @@
 
 <script>
     function validateNotNull() {
+        //user info
         var fNameInput = document.getElementById("fName");
         var lNameInput = document.getElementById("lname");
         var pwdInput = document.getElementById("pwd");
+        var pwdConfirmInput = document.getElementById("pwdConfirm")
+        var emailInput = document.getElementById("email");
 
+        //address info
+        var streetInput = document.getElementById("street");
+        var cityInput = document.getElementById("city");
+        var stateInput = document.getElementById("state")
+        var zipCodeInput = document.getElementById("zipCode")
 
+        //first name input not null validation
+        if (fNameInput.value == null || fNameInput.value === "") {
+            alert("First Name must be filled out");
+            return false;
+        }
+        //last name input not null validation
+        if (lNameInput.value == null || lNameInput.value === "") {
+            alert("Last Name must be filled out");
+            return false;
+        }
+        //password input not null validation
+        if (pwdInput.value == null || pwdInput.value === "") {
+            alert("Password must be filled out");
+            return false;
+        }
+        //confirm password input not null validation
+        if (pwdConfirmInput.value == null || pwdConfirmInput.value === "") {
+            alert("Username must be filled out");
+            return false;
+        }
+
+        //password input and password confirm input match validation
+        if(pwdInput.value !== pwdConfirmInput.value){
+            alert("Password must match");
+            return false;
+        }
+
+        //email not null validation
+        if(emailInput.value == null || emailInput.value ===""){
+            alert("Email must be filled out");
+            return false;
+        }
+
+        //TODO email format validation
+
+        //
     }
 
 </script>
@@ -44,8 +88,8 @@
             <label for="pwd">Password:</label>
             <input type="password" id="pwd" name="pwd" required><br><br>
 
-            <label for="ssn">SSN:</label>
-            <input type="text" id="ssn" name="ssn" required><br><br>
+            <label for="pwdConfirm">Confirm Password:</label>
+            <input type="password" id="pwdConfirm" name="pwdConfirm" required><br><br>
 
             <label>Address:</label>
 <!--            <label for="street">Street:</label>-->
