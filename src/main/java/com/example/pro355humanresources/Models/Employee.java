@@ -5,20 +5,26 @@ import org.springframework.data.mongodb.core.aggregation.ArithmeticOperators;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 
 @Document(collection = "Employees")
 public class Employee {
 
+    @Id
+    private String id;
     private String employeeFirstName;
     private String employeeLastName;
-    private String employeeEmail;
-    private int employeeSSN;
     private double employeeSalary;
+
+    private String employeePosition;
+    private Address employeeAddress;
+
+    private String[] positions;
+
     private boolean employeeStatus;
     private String createdDate;
     private String modifiedDate;
-    private Address employeeAddress;
 
     public Employee() {
     }
@@ -26,6 +32,7 @@ public class Employee {
     public Employee(String employeeFirstName, String employeeLastName) {
         this.employeeFirstName = employeeFirstName;
         this.employeeLastName = employeeLastName;
+        this.employeeStatus = true;
         this.createdDate = LocalDateTime.now().toString();
     }
 
@@ -36,16 +43,17 @@ public class Employee {
         this.createdDate = LocalDateTime.now().toString();
     }
 
-    public Employee(String employeeFirstName, String employeeLastName, String employeeEmail, int employeeSSN, double employeeSalary, boolean employeeStatus, Address employeeAddress) {
+    public Employee(String id,String employeeFirstName, String employeeLastName, double employeeSalary, String employeePosition, Address employeeAddress, String[] positions, boolean employeeStatus) {
+        this.id = id;
         this.employeeFirstName = employeeFirstName;
         this.employeeLastName = employeeLastName;
-        this.employeeEmail = employeeEmail;
-        this.employeeSSN = employeeSSN;
         this.employeeSalary = employeeSalary;
+        this.employeePosition = employeePosition;
+        this.employeeAddress = employeeAddress;
+        this.positions = positions;
         this.employeeStatus = employeeStatus;
-        //this.employeeAddress = employeeAddress;
-        this.createdDate = LocalDateTime.now().toString();
     }
+
 
     public String getEmployeeFirstName() {
         return employeeFirstName;
@@ -63,22 +71,6 @@ public class Employee {
         this.employeeLastName = employeeLastName;
     }
 
-    public String getEmployeeEmail() {
-        return employeeEmail;
-    }
-
-    public void setEmployeeEmail(String employeeEmail) {
-        this.employeeEmail = employeeEmail;
-    }
-
-    public int getEmployeeSSN() {
-        return employeeSSN;
-    }
-
-    public void setEmployeeSSN(int employeeSSN) {
-        this.employeeSSN = employeeSSN;
-    }
-
     public double getEmployeeSalary() {
         return employeeSalary;
     }
@@ -87,7 +79,31 @@ public class Employee {
         this.employeeSalary = employeeSalary;
     }
 
-    public boolean isEmployeeStatus() {
+    public String getEmployeePosition() {
+        return employeePosition;
+    }
+
+    public void setEmployeePosition(String employeePosition) {
+        this.employeePosition = employeePosition;
+    }
+
+    public Address getEmployeeAddress() {
+        return employeeAddress;
+    }
+
+    public void setEmployeeAddress(Address employeeAddress) {
+        this.employeeAddress = employeeAddress;
+    }
+
+    public String[] getPositions() {
+        return positions;
+    }
+
+    public void setPositions(String[] positions) {
+        this.positions = positions;
+    }
+
+    public boolean getEmployeeStatus() {
         return employeeStatus;
     }
 
@@ -111,9 +127,22 @@ public class Employee {
         this.modifiedDate = modifiedDate;
     }
 
+    public void setId(String id){this.id = id;}
+
+    public String getId(){return id;}
 
     @Override
     public String toString() {
-        return "Employee{ employeeFirstName='" + employeeFirstName + '\'' + ", employeeLastName='" + employeeLastName + '\'' + ", employeeEmail='" + employeeEmail + '\'' + ", employeeSSN=" + employeeSSN + ", employeeSalary=" + employeeSalary + ", employeeStatus=" + employeeStatus + ", createdDate='" + createdDate + '\'' + ", modifiedDate='" + modifiedDate + '\'' + '}';
+        return "Employee{" +
+                "employeeFirstName='" + employeeFirstName + '\'' +
+                ", employeeLastName='" + employeeLastName + '\'' +
+                ", employeeSalary=" + employeeSalary +
+                ", employeePosition='" + employeePosition + '\'' +
+                ", employeeAddress=" + employeeAddress +
+                ", positions=" + Arrays.toString(positions) +
+                ", employeeStatus=" + employeeStatus +
+                ", createdDate='" + createdDate + '\'' +
+                ", modifiedDate='" + modifiedDate + '\'' +
+                '}';
     }
 }

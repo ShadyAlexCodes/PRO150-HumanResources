@@ -1,8 +1,5 @@
 package com.example.pro355humanresources.Models;
 
-import org.springframework.data.mongodb.core.mapping.Field;
-
-
 public class Address {
     private String streetNumber;
     private String streetName;
@@ -11,7 +8,6 @@ public class Address {
     private String zipcode;
 
     public Address() {
-
     }
 
     public Address(String streetNumber, String streetName, String city, String state, String zipcode) {
@@ -20,14 +16,6 @@ public class Address {
         this.city = city;
         this.state = state;
         this.zipcode = zipcode;
-    }
-
-    public Address(Address employeeAddress) {
-        this.streetNumber = employeeAddress.streetNumber;
-        this.streetName = employeeAddress.streetName;
-        this.city = employeeAddress.city;
-        this.state = employeeAddress.state;
-        this.zipcode = employeeAddress.zipcode;
     }
 
     public String getStreetNumber() {
