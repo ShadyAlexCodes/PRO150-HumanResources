@@ -50,7 +50,26 @@
 
         //TODO email format validation
 
-        //
+        //address not null validation
+        if(streetInput.value == null || streetInput.value ===""){
+            alert("Street must be filled out");
+            return false;
+        }
+
+        if(cityInput.value == null || cityInput.value ===""){
+            alert("City must be filled out");
+            return false;
+        }
+
+        if(stateInput.value == null || stateInput.value ===""){
+            alert("State must be filled out");
+            return false;
+        }
+
+        if(zipCodeInput.value == null || zipCodeInput.value ===""){
+            alert("Zip Code must be filled out");
+            return false;
+        }
     }
 
 </script>

@@ -1,11 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <h1>TEST PAGE</h1>
-</head>
-<body>
 
-</body>
+<script>
+    $(document).ready( function () {
+        $('#allEmployee_table').DataTable(
+
+            {
+                ajax: {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    url: "localhost:6060/ERS/getEmployeeById/0",
+                    dataSrc: ""
+                },
+                columns: [
+                    { data: 'employeeId' },
+                    { data: 'employeeFName' },
+                    { data: 'employeeFName' },
+                    { data: 'employeePosition' },
+                    { data: 'employeeEmail' },
+                    { data: 'employeeUserName' },
+                    { data: 'employeePwd' },
+                    { data: 'employeeAddress' },
+                    { data: 'employeeSalary' },
+                    { data: 'employeeFName' },
+                    { data: 'admin' },
+                    { data: 'active' },
+
+                ]
+            }
+
+
+        );
+    } );
+</script>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <h1>TEST PAGE</h1>
+    </head>
+
+    <body>
+    <div class="banner">
+        <h1>Employee Record</h1>
+    </div>
+
+    <table id="allEmployee_table" class="display">
+        <thead>
+        <tr>
+            <th>Employee ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Position</th>
+            <th>Email</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Address</th>
+            <th>Salary</th>
+            <th>Manager</th>
+            <th>Admin</th>
+            <th>Active</th>
+        </tr>
+        </thead>
+    </table>
+
+    </body>
 </html>
