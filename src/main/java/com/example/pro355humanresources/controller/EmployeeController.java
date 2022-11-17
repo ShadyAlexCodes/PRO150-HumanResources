@@ -8,7 +8,7 @@ import com.example.pro355humanresources.services.EmployeeService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ERC")
+@RequestMapping("/ERS")
 public class EmployeeController {
     @Autowired
     private EmployeeService service;

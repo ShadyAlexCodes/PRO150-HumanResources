@@ -15,7 +15,7 @@ public class Employee {
     Boolean isActive;
 
     //employee info
-    String employeefName;
+    String employeeFName;
     String employeeLName;
     String employeePosition;
     String employeeEmail;
@@ -52,12 +52,12 @@ public class Employee {
         isActive = active;
     }
 
-    public String getEmployeefName() {
-        return employeefName;
+    public String getEmployeeFName() {
+        return employeeFName;
     }
 
-    public void setEmployeefName(String employeefName) {
-        this.employeefName = employeefName;
+    public void setEmployeeFName(String employeeFName) {
+        this.employeeFName = employeeFName;
     }
 
     public String getEmployeeLName() {

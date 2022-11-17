@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+<script src=https://code.jquery.com/jquery-3.6.0.js></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
 <script>
     $(document).ready( function () {
         $('#allEmployee_table').DataTable(
@@ -9,7 +12,7 @@
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'
                     },
-                    url: "localhost:6060/ERS/getEmployeeById/0",
+                    url: "localhost:6060/ERS/getAllEmployees",
                     dataSrc: ""
                 },
                 columns: [
@@ -37,8 +40,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Title</title>
-        <h1>TEST PAGE</h1>
+        <title>TEST PAGE</title>
     </head>
 
     <body>
@@ -46,7 +48,7 @@
         <h1>Employee Record</h1>
     </div>
 
-    <table id="allEmployee_table" class="display">
+    <table id="allEmployee_table" class="styled-table">
         <thead>
         <tr>
             <th>Employee ID</th>
