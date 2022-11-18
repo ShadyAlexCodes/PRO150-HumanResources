@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -29,16 +30,26 @@ public class EmployeeRestController {
         return employeeRepo.findAll();
     }
 
+    @GetMapping(path = "/employees/{id}")
+    public Employee getEmployeeById(@PathVariable("id") String id) throws IOException {
+        LOG.info("Getting all employees");
+        return new Employee();
+    }
+
+
     @PostMapping(path = "/employees")
     public String addEmployee(@RequestBody Employee employee) throws IOException {
         LOG.info("Inserted the employee: " + employee);
         employeeRepo.save(new Employee(employee.getEmployeeFirstName(), employee.getEmployeeLastName(), employee.getEmployeeAddress()));
         return "The employee " + employee.getEmployeeFirstName() + " has been created!";
     }
-    @PostMapping(path = "/employees/{id}")
-    public String updateById(@PathVariable("id") Employee id){
-//        employeeRepo.s
-        return "";
+    @PutMapping(path = "/employees/{id}")
+    public String updateById(@PathVariable("id") String id, @RequestBody Employee employee)
+    {
+
+        employeeRepo.save(employee);
+
+        return "Employee" + employee.getEmployeeFirstName()+"edited hopefully";
     }
 
     @DeleteMapping(path = "/employees")

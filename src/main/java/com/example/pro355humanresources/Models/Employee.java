@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Optional;
 
 
 @Document(collection = "Employees")
@@ -53,8 +54,6 @@ public class Employee {
         this.positions = positions;
         this.employeeStatus = employeeStatus;
     }
-
-
     public String getEmployeeFirstName() {
         return employeeFirstName;
     }
