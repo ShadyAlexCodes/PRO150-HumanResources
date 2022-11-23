@@ -21,8 +21,10 @@
     <head>
         <meta charset="UTF-8">
         <title>Login Page</title>
-        <meta name="viewport" content=
-                "width=device-width, initial-scale=1" />
+        <H1 style="text-align: center">Login Page</H1>
+        </br>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" >
+<!--        <link rel="stylesheet" href="bootstrap.css" type="text/css" />-->
 
         <!-- Bootstrap CSS -->
         <link href=
@@ -33,20 +35,20 @@
     </head>
 
     <body>
-<!--    /action_page.php-->
+    <div class="d-flex justify-content-evenly form-group">
         <form method="get" onsubmit="return validateNotNull()">
-            <label for="userName">Username</label>
-            <input type="text" id="userName" name="userName" placeholder="Username" required><br><br>
+
+            <label for="userName" class="bold">Username</label>
+            <input type="text" id="userName" name="userName" placeholder="Username" required class="form-control"><br><br>
 
             <label for="psw">Password </label>
-            <input type="password" id="psw" name="psw" placeholder="Password" required><br><br>
+            <input type="password" id="psw" name="psw" placeholder="Password" required class="form-control"><br><br>
 
-            <input type="submit" value="Submit">
-
+            <input type="submit" value="Submit" class="btn btn-primary btn-block col-sm-12">
+            </br>
+            <div class="col-sm-12" style="padding: 0;">New user? <a href="register.html">Sign Up here</a></div>
         </form>
+    </div>
 
-    <p> Not a current user? try registering <a href="#">here!</a></p>
-
-        <!--        to register page-->
     </body>
 </html>
