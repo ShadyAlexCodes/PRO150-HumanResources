@@ -89,7 +89,12 @@
                 "City": cityInput.value,
                 "State" : stateInput.value,
                 "ZipCode" : zipCodeInput.value
-            }
+            },
+            status: true,
+            isAdmin: false,
+            createdDate: "today", //TODO get current date and time
+            modifiedDate: "tmrw" //TODO same function as above
+
         }
         sendUser(validatedNewUser);
     }

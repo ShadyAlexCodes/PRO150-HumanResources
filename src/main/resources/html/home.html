@@ -1,4 +1,42 @@
 <!DOCTYPE html>
+<script>
+    function getCurrentRowEmployeeId(){
+        //TODO grab the id from table
+
+        //sends the id to Edit
+        sendIDToEdit(id)
+    }
+
+    function sendIDToEdit(id){
+        localStorage.setItem("EmployeeIdForEditPage", id)
+        //setting EmployeeIdForEditPage as key and id as value in localStroage so you can access it globally
+    }
+
+    //getting entries from the give data and return it to the table
+    // function getEntries(entry){
+    //     var entry_list = document.getElementById("user_table");
+    //     entry_list.innerHTML = "";
+    //     for(){
+    //         var html = <tr>
+    //             "<td>"+ id +"</td>"
+    //             <td>name</td>
+    //             <td>last name</td>
+    //             <td>department</td>
+    //             <td>
+    //                 <span className="badge bg-success">Active/inactive</span>
+    //             </td>
+    //             <td>
+    //                 <button className="btn btn-success">BT_Edit_1</button>
+    //                 <button className="btn btn-danger">BT_Delete_1</button>
+    //             </td>
+    //             </tr>
+    //     }
+    // }
+
+
+
+</script>
+
 <html lang="en">
     <head>
         <!-- Required meta tags -->
@@ -44,22 +82,15 @@
                     <td>Jane</td>
                     <td>Doe</td>
                     <td>Ur mom's house</td>
-                    <td>active</td>
-                </tr>
-
-                <tr>
-                    <td>02</td>
-                    <td>John</td>
-                    <td>Doe</td>
-                    <td>Somewhere</td>
                     <td>
-                        <span class="badge bg-danger">inactive</span>
+                        <span class ="badge bg-success">Active</span>
                     </td>
 
                     <td>
-                        <button class="btn btn-success">e</button>
-                        <button class="btn btn-danger">d</button>
+                        <button class="btn btn-success">BT_Edit_1</button>
+                        <button class="btn btn-danger">BT_Delete_1</button>
                     </td>
+
                 </tr>
 
             </tbody>
