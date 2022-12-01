@@ -1,37 +1,36 @@
 <!DOCTYPE html>
 <script>
-    function getCurrentRowEmployeeId(){
-        //TODO grab the id from table
-
-        //sends the id to Edit
-        sendIDToEdit(id)
-    }
+    // function getCurrentRowEmployee(){
+    //     //TODO grab the id from table
+    //
+    //     //sends the id to Edit
+    //     sendIDToEdit(id)
+    // }
 
     function sendIDToEdit(id){
         localStorage.setItem("EmployeeIdForEditPage", id)
         //setting EmployeeIdForEditPage as key and id as value in localStroage so you can access it globally
     }
 
-    //getting entries from the give data and return it to the table
-    // function getEntries(entry){
-    //     var entry_list = document.getElementById("user_table");
-    //     entry_list.innerHTML = "";
-    //     for(){
-    //         var html = <tr>
-    //             "<td>"+ id +"</td>"
-    //             <td>name</td>
-    //             <td>last name</td>
-    //             <td>department</td>
-    //             <td>
-    //                 <span className="badge bg-success">Active/inactive</span>
-    //             </td>
-    //             <td>
-    //                 <button className="btn btn-success">BT_Edit_1</button>
-    //                 <button className="btn btn-danger">BT_Delete_1</button>
-    //             </td>
-    //             </tr>
-    //     }
-    // }
+    // getting entries from the give data and return it to the table
+    function getCurrentRowEmployee(row){
+        document.getElementById('TestOutput').innerHTML = "";
+        var user_table = document.getElementById("user_table");
+
+        //loop through all the rows of the table until you find the row you want
+        for (i = 1; i < row && i < user_table.rows.length; i++) {
+
+            //grab all the content of the correct row with RollCells
+            //RowCells = all the individual cells of the row
+            var RowCells = user_table.rows.item(i).cells;
+
+            // loop through all the individual cells in RowCells
+            for (var j = 0; j < RowCells.length; j++) {
+                TestOutput.innerHTML = TestOutput.innerHTML + ' ' + TestOutput.item(j).innerHTML;
+            }
+            TestOutput.innerHTML = TestOutput.innerHTML + '<br />';     // ADD A BREAK (TAG).
+        }
+    }
 
 
 
@@ -51,6 +50,7 @@
     </head>
 
     <body>
+        <p id="TestOutput"></p>
 <!--        <Text>Home Page</Text>-->
         <H1 style="text-align: center">Home Page</H1>
 
