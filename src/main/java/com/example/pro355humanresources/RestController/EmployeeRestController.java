@@ -13,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.Option;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -100,35 +102,61 @@ public class EmployeeRestController {
     }
 
     @PutMapping(path = "/employees/{id}")
-    public String updateById(@PathVariable("id") String id, @RequestBody Employee employee) {
+    public ResponseEntity<Employee> updateById(@PathVariable("id") String id, @RequestBody Employee employee) {
+        Optional<Employee> employeeData = employeeRepo.findById(id);
 
-        // employeeRepo.save(employee);
-
-        return "Employee" + employee.getEmployeeFirstName() + "edited hopefully";
+        if(employeeData.isPresent()) {
+            Employee updatedEmployee = employeeData.get();
+            updatedEmployee.setEmployeeFirstName(employee.getEmployeeFirstName());
+            updatedEmployee.setEmployeeLastName(employee.getEmployeeLastName());
+            updatedEmployee.setEmployeeAddress(employee.getEmployeeAddress());
+            updatedEmployee.setEmployeeSalary(employee.getEmployeeSalary());
+            updatedEmployee.setEmployeePosition(employee.getEmployeePosition());
+            updatedEmployee.setModifiedDate(LocalDateTime.now().toString());
+            return new ResponseEntity<>(employeeRepo.save(updatedEmployee), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @DeleteMapping(path = "/employees")
-    public String deleteAllEmployees() {
+    public ResponseEntity<HttpStatus> deleteAllEmployees() {
         LOG.warn("ALL EMPLOYEES HAVE BEEN DELETED");
-        //   employeeRepo.deleteAll();
-        return "All employee's have been deleted.";
+        try {
+            employeeRepo.deleteAll();
+            return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+        } catch (Exception exception) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping(path = "/employees/{id}")
-    public String deleteById(@PathVariable("id") Employee id) {
-        //    employeeRepo.delete(id);
-        return "HAHAH U SMELL";
+    public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") String id) {
+        LOG.warn("ALL EMPLOYEES HAVE BEEN DELETED");
+        try {
+            employeeRepo.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
+        } catch (Exception exception) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping(path = "/employees/generate/{quantity}")
-    public String generateFakeEmployees(@PathVariable int quantity) {
+    public ResponseEntity<HttpStatus> generateFakeEmployees(@PathVariable int quantity) {
+        LOG.info("Creating " + quantity + " of users!");
+        try {
+            Faker faker = new Faker();
 
-        Faker faker = new Faker();
+            for (int i = 0; i < quantity; i++) {
+               createEmployee(new Employee(faker.name().firstName(), faker.name().lastName(), new Address(faker.address().streetAddressNumber(), faker.address().streetName(), faker.address().city(), faker.address().state(), faker.address().zipCode())));
+            }
+            return new ResponseEntity<>(HttpStatus.OK);
 
-        for (int i = 0; i < quantity; i++) {
-            //     employeeRepo.save(new Employee(faker.name().firstName(), faker.name().lastName(), new Address(faker.address().streetAddressNumber(), faker.address().streetName(), faker.address().city(), faker.address().state(), faker.address().zipCode())));
+        } catch (Exception exception) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return "Inserted a total of " + quantity + " employees into the database";
+
+
     }
 }
