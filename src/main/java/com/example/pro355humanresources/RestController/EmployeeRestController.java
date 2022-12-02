@@ -50,8 +50,9 @@ public class EmployeeRestController {
             if (firstName == null && lastName == null) employees.addAll(employeeRepo.findAll());
             else if (firstName != null) employees.addAll(employeeRepo.findAllByEmployeeFirstNameContainingIgnoreCase(firstName));
             else employees.addAll(employeeRepo.findAllByEmployeeLastNameContainingIgnoreCase(lastName));
-
-            if (employees.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            //Give front end an empty array if no employees are found instead of no content status
+           // if (employees.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            if (employees.isEmpty()) return new ResponseEntity<>(employees, HttpStatus.OK);
 
             return new ResponseEntity<>(employees, HttpStatus.OK);
         } catch (Exception exception) {
