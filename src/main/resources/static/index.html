@@ -1,10 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Required meta tags -->
     <meta charset="UTF-8">
-    <title>PRO335 - Home Page</title>
+    <meta name="viewport" content=
+            "width=device-width, initial-scale=1"/>
+    <title>Home Page</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"
+    >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <script>
+        //creating a employee class to hold all the data, can't use the same class in java because javascrpit dosent like it
+
+        class Employee {
+            constructor(
+                id,
+                employeeFirstName,
+                employeeLastName,
+                employeeSalary,
+                employeeEmail,
+                primaryPosition,
+                employeeAddress,
+                employeeStatus,
+                createdDate,
+                modifiedDate) {
+                this.id = id;
+                this.employeeFirstName = employeeFirstName;
+                this.employeeLastName = employeeLastName;
+                this.employeeSalary = employeeSalary;
+                this.employeeEmail = employeeEmail;
+                this.primaryPosition = primaryPosition;
+                this.employeeAddress = employeeAddress;
+                this.employeeStatus = employeeStatus;
+                this.createdDate = createdDate;
+                this.modifiedDate = modifiedDate;
+            }
+        }
+
+        function sendIDToEdit(id) {
+            // localStorage.setItem("EmployeeIdForEditPage", id)
+            //setting EmployeeIdForEditPage as key and id as value in localStroage so you can access it globally
+        }
+
+        function getAllEmployees() {
+            fetch("api/employees/", {
+                method: "GET",
+                mode: "no-cors",//get rid of cors error
+                headers: {'Content-Type': 'application/json'}
+
+                //for some reason it says there is a syntax error on line" }).then(response => response.json()) " when you run it, even with cors turned off, you can solve it by opening cmd and navigate to the chrome folder using
+                //cd C:\Program Files (x86)\Google\Chrome\Application or wherever your chrome folder is and then run : chrome.exe --disable-web-security --user-data-dir="c:/ChromeDevSession", this will open new chrome without security. this chrome will not throw any cors issue.
+                //the syntax issue will suddenly disappear running it this way without any code change, no idea why, might be a chrome issue, haven't test it on other browsers yet.
+
+            }).then(response => response.json())
+                .then(data => {
+                    console.log("raw data: ");
+                    console.log(data);
+                    //create a list of employee object to store the data
+                    let employeeList = [];
+                    //loop through the data and create employee objects
+                    for (let i = 0; i < data.length; i++) {
+                        let employee = new Employee(
+                            data[i].id,
+                            data[i].employeeFirstName,
+                            data[i].employeeLastName,
+                            data[i].employeeSalary,
+                            data[i].employeeEmail,
+                            data[i].primaryPosition,
+                            data[i].employeeAddress,
+                            data[i].employeeStatus,
+                            data[i].createdDate,
+                            data[i].modifiedDate
+                        );
+                        //push the employee object to the list
+                        employeeList.push(employee);
+                    }
+                    console.log("employeeList: ");
+                    console.log(employeeList);
+                    renderEmployees(employeeList);
+                })
+                .catch(error => console.log(error));
+        }
+
+        function renderEmployees(employeeList) {
+            console.log("Rendering Employees");
+            var tblData = document.getElementById("tblData");
+            tblData.innerHTML = "";
+            // why not for each? {
+            //I linked you some refrence on creating html elements in javascrpt in discord
+            // would this approach be wrong?
+            for (var employee of employeeList) {
+                const status = employee.employeeStatus ? "bg-success" : "bg-danger";
+                const statusMsg = employee.employeeStatus ? "Enabled" : "Disabled";
+                const toggleStatus =
+                    employee.employeeStatus ? `<button
+                            type="button"
+                            onclick="getCurrentRowEmployee(1)"
+                            class="btn btn-danger btn-sm btn-rounded"
+                    >
+                        <i class="fa fa-eye-slash" aria-hidden="true"></i>` : `<button
+                            type="button"
+                            onclick="getCurrentRowEmployee(1)"
+                            class="btn btn-success btn-sm btn-rounded"
+                    >
+                        <i class="fa fa-eye" aria-hidden="true"></i>`;
+                var row_html = `
+                            <tr>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <div class="ms-3">
+                            <p class="fw-bold mb-1">${employee.employeeFirstName} ${employee.employeeLastName}</p>
+                            <p class="text-muted mb-0">${employee.employeeEmail}</p>
+                        </div>
+                    </div>
+                </td>
+
+                <td>${employee.primaryPosition}</td>
+
+                <td>$${employee.employeeSalary}</td>
+
+                <td>
+                    <span class="badge ${status} rounded-pill">${statusMsg}</span>
+                </td>
+
+                <td>
+                    ${toggleStatus}
+                                    <button
+                            type="button"
+                            onclick="getCurrentRowEmployee(1)"
+                            class="btn btn-secondary btn-sm btn-rounded"
+                    >
+                        <i class="fa fa-wrench" aria-hidden="true"></i>
+                    </button>
+
+                    <button
+                            type="button"
+                            class="btn btn-danger btn-sm btn-rounded"
+                            data-mdb-ripple-color="dark">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                    </button>
+                </td>
+            </tr>
+`
+                tblData.innerHTML += row_html;
+            }
+        }
+    </script>
 </head>
-<body>
+
+<body onload="getAllEmployees()">
+
+<!--
+Header and Navigation Bar
+-->
+
+<header class="p-3 text-bg-dark">
+    <div class="container">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                    <use xlink:href="#bootstrap"></use>
+                </svg>
+            </a>
+
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li><a href="#" class="nav-link px-2 text-white">Home</a></li>
+            </ul>
+
+            <div class="text-end">
+                <button type="button" class="btn btn-outline-light me-2">Login</button>
+                <button type="button" class="btn btn-warning">Sign-up</button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container my-5">
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search by Name" aria-label="Username"
+               aria-describedby="basic-addon1">
+    </div>
+    <div class="shadow-4 overflow-hidden">
+        <table class="table align-middle mb-0 bg-white" id="user_table">
+            <thead class="bg-light">
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Salary</th>
+                <th>Active</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody id="tblData">
+            <tr>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <div class="ms-3">
+                            <!-- Would we have to create a row per each entry? then name_row_1, row_2, row_3, etc?
+                             mmmmm. that feels like bad programming xD-->
+                            <!--                            -->
+
+                            <p id=name_row_0 class="fw-bold mb-1">First + Last Name</p>
+                            <p class="text-muted mb-0">Email Address</p>
+                        </div>
+                    </div>
+                </td>
+
+                <td>Position</td>
+
+                <td>
+                    <span class="badge bg-success rounded-pill">Active</span>
+                </td>
+                <td>Admin</td>
+                <td>
+                    <button
+                            type="button"
+                            onclick="getCurrentRowEmployee(1)"
+                            class="btn btn-link btn-sm btn-rounded"
+                    >
+                        Edit
+                    </button>
+                    <button
+                            type="button"
+                            class="btn btn-rounded btn-sm fw-bold btn-danger"
+                            data-mdb-ripple-color="dark">Delete
+                    </button>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer>PRO150 - TheGroup69™</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"
+></script>
 
 </body>
 </html>
