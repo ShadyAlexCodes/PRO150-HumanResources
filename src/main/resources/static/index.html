@@ -80,6 +80,7 @@
                     }
                     console.log("employeeList: ");
                     console.log(employeeList);
+
                     renderEmployees(employeeList);
                 })
                 .catch(error => console.log(error));
@@ -92,6 +93,9 @@
             // why not for each? {
             //I linked you some refrence on creating html elements in javascrpt in discord
             // would this approach be wrong?
+            //if employeeList is empty, show no data found
+
+
             for (var employee of employeeList) {
                 const status = employee.employeeStatus ? "bg-success" : "bg-danger";
                 const statusMsg = employee.employeeStatus ? "Enabled" : "Disabled";
@@ -181,8 +185,7 @@ Header and Navigation Bar
 <div class="container my-5">
     <div class="input-group mb-3">
         <input id="search-input" type="text" class="form-control" placeholder="Search by Name" aria-label="Username"
-               aria-describedby="basic-addon1">
-        <button id="search-btn" class="btn btn-outline-secondary" type="button" id="button-addon1" onclick="getAllEmployees()">Search</button>
+               aria-describedby="basic-addon1" onkeyup="getAllEmployees()">
     </div>
     <div class="shadow-4 overflow-hidden">
         <table class="table align-middle mb-0 bg-white" id="user_table">
