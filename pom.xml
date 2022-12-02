@@ -49,7 +49,7 @@
         <dependency>
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
-            <version>0.15</version>
+            <version>LATEST</version>
         </dependency>
     </dependencies>
 
