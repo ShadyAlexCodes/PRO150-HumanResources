@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<script>
+    //creating a employee class to hold all the data, can't use the same class in java because javascrpit dosent like it
+    class Employee{
+        constructor(
+            employeeFName,
+            employeeLName,
+            employeePosition,
+            employeeEmail,
+            employeeId,
+            employeeAddress,
+            employeeSalary,
+            employeeStatus,
+            employeeIsAdmin,
+            employeeCreatedDate,
+            employeeLastUpdatedDate,
+            employeePwd
+        ){
+            this.employeeFName = employeeFName;
+            this.employeeLName = employeeLName;
+            this.employeePosition = employeePosition;
+            this.employeeEmail = employeeEmail;
+            this.employeeId = employeeId;
+            this.employeeAddress = employeeAddress;
+            this.employeeSalary = employeeSalary;
+            this.employeeStatus = employeeStatus;
+            this.employeeIsAdmin = employeeIsAdmin;
+            this.employeeCreatedDate = employeeCreatedDate;
+            this.employeeLastUpdatedDate = employeeLastUpdatedDate;
+            this.employeePwd = employeePwd;
+        }
+    }
+
+    function sendIDToEdit(id){
+        // localStorage.setItem("EmployeeIdForEditPage", id)
+        //setting EmployeeIdForEditPage as key and id as value in localStroage so you can access it globally
+    }
+
+    class Employee{
+        constructor(employeeFName,employeeLName,employeePosition,employeeEmail,employeeId){
+            this.employeeFName = employeeFName;
+            this.employeeLName = employeeLName;
+            this.employeePosition = employeePosition;
+            this.employeeEmail = employeeEmail;
+            this.employeeId = employeeId;
+        }
+    }
+
+
+    function getAllEmployees(){
+        fetch("http://localhost:6060/ERS/getAllEmployees",{
+            method: "GET",
+            mode: "no-cors",//get rid of cors error
+            headers: {'Content-Type': 'application/json'}
+
+            //for some reason it says there is a syntax error on line" }).then(response => response.json()) " when you run it, even with cors turned off, you can solve it by opening cmd and navigate to the chrome folder using
+            //cd C:\Program Files (x86)\Google\Chrome\Application or wherever your chrome folder is and then run : chrome.exe --disable-web-security --user-data-dir="c:/ChromeDevSession", this will open new chrome without security. this chrome will not throw any cors issue.
+            //the syntax issue will suddenly disappear running it this way without any code change, no idea why, might be a chrome issue, haven't test it on other browsers yet.
+
+        }).then(response => response.json())
+            .then(data => {
+                console.log("raw data: ");
+                console.log(data);
+                //create a list of employee object to store the data
+                let employeeList = [];
+                //loop through the data and create employee objects
+                for(let i = 0; i < data.length; i++){
+                    let employee = new Employee(
+                        data[i].employeeFName,
+                        data[i].employeeLName,
+                        data[i].employeePosition,
+                        data[i].employeeEmail,
+                        data[i].employeeId,
+                        data[i].employeeAddress,
+                        data[i].employeeSalary,
+                        data[i].employeeStatus,
+                        data[i].employeeIsAdmin,
+                        data[i].employeeCreatedDate,
+                        data[i].employeeLastUpdatedDate,
+                        data[i].employeePwd
+                    );
+                    //push the employee object to the list
+                    employeeList.push(employee);
+                }
+                console.log("employeeList: ");
+                console.log(employeeList);
+            })
+            .catch(error => console.log(error));
+    }
+
+    
+</script>
+
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content=
+                "width=device-width, initial-scale=1"/>
+        <title>Home Page</title>
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"
+        >
+    </head>
+
+    <body>
+        <nav class="navbar navbar-light bg-light">
+         Home Page
+            <a class="navbar-brand mb-0 h1">
+                <img
+                        class="d-inline-block align-top"
+                        src="https://clipground.com/images/cube-logo-clipart-1.jpg"
+                         width="30" height="30"
+                />
+                <div
+                        class="collapse navbar-collapse"
+                        id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item active"><a href="#" class="nav-link">Register</a></li>
+                    </ul>
+
+                </div>
+            </a>
+
+        </nav>
+
+
+        <h1 id = "testTag">All Employees</h1>
+        <button onclick="getAllEmployees()">Get All Employees</button>
+
+        <div>
+            <input type="text" placeholder="Search"/>
+            <button onclick="">Search</button>
+
+        </div>
+        <button onclick="window.location.href='register.html'"  class="p-2 flex-fill">Register</button>
+
+<!--//TABLE REDESIGN-->
+        <div class="container my-5">
+            <div class="shadow-4 rounded-5 overflow-hidden">
+                <table class="table align-middle mb-0 bg-white" id="user_table">
+                    <thead class="bg-light">
+                    <tr>
+                        <th>Name</th>
+                        <th>Title</th>
+                        <th>Status</th>
+                        <th>Position</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img
+                                        src="https://yourhomesecuritywatch.com/wp-content/uploads/2016/08/smart-guy.jpg?x22732"
+                                        class="rounded-circle"
+                                        alt=""
+                                        style="width: 45px; height: 45px"
+                                />
+                                <div class="ms-3">
+                                    <p class="fw-bold mb-1">John Doe</p>
+                                    <p class="text-muted mb-0">john.doe@gmail.com</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="fw-bold mb-1">Software engineer</p>
+                            <p class="text-muted mb-0">IT department</p>
+                        </td>
+                        <td>
+                            <span class="badge bg-success rounded-pill">Active</span>
+                        </td>
+                        <td>Admin</td>
+                        <td>
+                            <button
+                                    type="button"
+                                    onclick="getCurrentRowEmployee(1)"
+                                    class="btn btn-link btn-sm btn-rounded"
+                            >
+                                Edit
+                            </button>
+                            <button
+                                    type="button"
+                                    class="btn btn-rounded btn-sm fw-bold btn-danger"
+                                    data-mdb-ripple-color="dark">Delete
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img
+                                        src="https://static.tumblr.com/vmnxgtq/35jng6kh5/meg-3.gif"
+                                        class="rounded-circle"
+                                        alt=""
+                                        style="width: 45px; height: 45px"
+                                />
+                                <div class="ms-3">
+                                    <p class="fw-bold mb-1">Alex Ray</p>
+                                    <p class="text-muted mb-0">alex.ray@gmail.com</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="fw-bold mb-1">Consultant</p>
+                            <p class="text-muted mb-0">Finance</p>
+                        </td>
+                        <td>
+                            <span class="badge bg-primary rounded-pill">Onboarding</span>
+                        </td>
+                        <td>User</td>
+                        <td>
+                            <button
+                                    type="button"
+                                    class="btn btn-link btn-rounded btn-sm fw-bold"
+                                    onclick="getCurrentRowEmployeeId(2)"
+                                    data-mdb-ripple-color="dark">Edit
+                            </button>
+                            <button
+                                    type="button"
+                                    class="btn btn-rounded btn-sm fw-bold btn-danger"
+                                    data-mdb-ripple-color="dark">Delete
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <img
+                                        src="https://pbs.twimg.com/media/EXHQkgKXsAEdsW2.jpg"
+                                        class="rounded-circle"
+                                        alt=""
+                                        style="width: 45px; height: 45px"
+                                />
+                                <div class="ms-3">
+                                    <p class="fw-bold mb-1">Kate Hunington</p>
+                                    <p class="text-muted mb-0">kate.hunington@gmail.com</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <p class="fw-bold mb-1">Designer</p>
+                            <p class="text-muted mb-0">UI/UX</p>
+                        </td>
+                        <td>
+                            <span class="badge bg-warning rounded-pill">Awaiting</span>
+                        </td>
+                        <td>Admin</td>
+                        <td>
+                            <button
+                                    type="button"
+                                    class="btn btn-link btn-rounded btn-sm fw-bold"
+                                    onclick="getCurrentRowEmployeeId(3)"
+                                    data-mdb-ripple-color="dark">Edit
+                            </button>
+                            <button
+                                    type="button"
+                                    class="btn btn-rounded btn-sm fw-bold btn-danger"
+                                    data-mdb-ripple-color="dark">Delete
+                            </button>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer>PRO150 - TheGroup69™</footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+                crossorigin="anonymous"
+        ></script>
+
+    </body>
+</html>
