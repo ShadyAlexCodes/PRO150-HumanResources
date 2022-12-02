@@ -45,7 +45,8 @@
         }
 
         function getAllEmployees() {
-            fetch("api/employees/", {
+
+            fetch("api/employees?firstName=" + document.getElementById("search-input").value , {
                 method: "GET",
                 mode: "no-cors",//get rid of cors error
                 headers: {'Content-Type': 'application/json'}
@@ -179,8 +180,9 @@ Header and Navigation Bar
 
 <div class="container my-5">
     <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Search by Name" aria-label="Username"
+        <input id="search-input" type="text" class="form-control" placeholder="Search by Name" aria-label="Username"
                aria-describedby="basic-addon1">
+        <button id="search-btn" class="btn btn-outline-secondary" type="button" id="button-addon1" onclick="getAllEmployees()">Search</button>
     </div>
     <div class="shadow-4 overflow-hidden">
         <table class="table align-middle mb-0 bg-white" id="user_table">
