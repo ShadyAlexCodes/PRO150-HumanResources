@@ -48,8 +48,8 @@ public class EmployeeRestController {
             List<Employee> employees = new ArrayList<Employee>();
 
             if (firstName == null && lastName == null) employees.addAll(employeeRepo.findAll());
-            else if (firstName != null) employees.addAll(employeeRepo.findAllByEmployeeFirstNameContaining(firstName));
-            else employees.addAll(employeeRepo.findAllByEmployeeLastNameContaining(lastName));
+            else if (firstName != null) employees.addAll(employeeRepo.findAllByEmployeeFirstNameContainingIgnoreCase(firstName));
+            else employees.addAll(employeeRepo.findAllByEmployeeLastNameContainingIgnoreCase(lastName));
 
             if (employees.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 

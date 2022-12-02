@@ -8,8 +8,8 @@ import java.util.List;
 public interface EmployeeRepo
     extends MongoRepository<Employee, String> {
 
-    List<Employee> findAllByEmployeeFirstNameContaining(String employeeLastName);
-    List<Employee> findAllByEmployeeLastNameContaining(String employeeLastName);
+    List<Employee> findAllByEmployeeFirstNameContainingIgnoreCase(String employeeLastName);
+    List<Employee> findAllByEmployeeLastNameContainingIgnoreCase(String employeeLastName);
     List<Employee> findByEmployeeStatus(boolean enabled);
 
 }
