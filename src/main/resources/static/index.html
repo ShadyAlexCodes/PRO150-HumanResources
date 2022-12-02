@@ -147,6 +147,49 @@
                 tblData.innerHTML += row_html;
             }
         }
+
+        //VISIBILITY METHOD
+        function setMeVisible(id){
+            if(){
+                document.getElementById('tableRowData').style.visibility='hidden';
+            } else{
+                document.getElementById('tableRowData').style.visibility='visible';
+                console.log("Not able to set visibility on selected object")
+            }
+
+        }
+
+        //UPDATE/MODIFY
+        // function updateEntries() {
+        //     var id = document.getElementById("entry_id").value;
+        //     var name = document.getElementById("name_row_0").value;
+        //     var position = document.getElementById(" ").value;
+        //
+        //     var entry = {
+        //         "id": id,
+        //         "name": name
+        //     }
+        //     //AJAX
+        //     var xmlHTTP = new XMLHttpRequest();
+        //     xmlHTTP.open("PUT", "http://localhost:6060/" + id);
+        //     xmlHTTP.setRequestHeader("Content-Type", "application/json");
+        //     xmlHTTP.setRequestHeader('Authorization', localStorage.getItem("key"));
+        //     xmlHTTP.onreadystatechange = function () {
+        //         console.log("Ready State: ", this.status);
+        //         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+        //             //entry created
+        //             console.log("entry has been posted");
+        //             getEntries();
+        //         }
+        //     }
+        //     xmlHTTP.send(JSON.stringify(entry));
+        // }
+
+        //DELETE
+
+
+
+
     </script>
 </head>
 
@@ -194,7 +237,7 @@ Header and Navigation Bar
             </tr>
             </thead>
             <tbody id="tblData">
-            <tr>
+            <tr id="tableRowData">
                 <td>
                     <div class="d-flex align-items-center">
                         <div class="ms-3">
