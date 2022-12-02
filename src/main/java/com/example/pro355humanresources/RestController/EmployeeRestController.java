@@ -93,7 +93,7 @@ public class EmployeeRestController {
     public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) throws IOException {
         LOG.info("Creating a new Employee: ---");
         try {
-            Employee newEmployee = employeeRepo.save(new Employee(employee.getEmployeeFirstName(), employee.getEmployeeLastName(), employee.getEmployeeAddress()));
+            Employee newEmployee = employeeRepo.save(employee);
             return new ResponseEntity<>(newEmployee, HttpStatus.OK);
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -148,7 +148,22 @@ public class EmployeeRestController {
             Faker faker = new Faker();
 
             for (int i = 0; i < quantity; i++) {
-               createEmployee(new Employee(faker.name().firstName(), faker.name().lastName(), new Address(faker.address().streetAddressNumber(), faker.address().streetName(), faker.address().city(), faker.address().state(), faker.address().zipCode())));
+                String firstName = faker.name().firstName();
+                String lastName = faker.name().lastName();
+                double salary = faker.number().randomDouble(2, 10, 400000);
+                String email = faker.internet().emailAddress();
+                String position = faker.job().position();
+                String address = faker.name().firstName();
+                boolean status = faker.bool().bool();
+
+               createEmployee(new Employee(
+                       firstName,
+                       lastName,
+                       salary,
+                       email,
+                       position,
+                       new Address(faker.address().streetAddressNumber(), faker.address().streetName(), faker.address().city(), faker.address().state(), faker.address().zipCode()),
+                       status));
             }
             return new ResponseEntity<>(HttpStatus.OK);
 

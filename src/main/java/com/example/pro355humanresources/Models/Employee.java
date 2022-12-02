@@ -17,19 +17,14 @@ public class Employee {
     private String employeeFirstName;
     private String employeeLastName;
     private double employeeSalary;
-
+    private String employeeEmail;
     private String primaryPosition;
     private Address employeeAddress;
-
-    // private String[] positions;
-
     private boolean employeeStatus;
     private String createdDate;
     private String modifiedDate;
-
     public Employee() {
     }
-
     public Employee(String employeeFirstName, String employeeLastName) {
         this.employeeFirstName = employeeFirstName;
         this.employeeLastName = employeeLastName;
@@ -37,19 +32,15 @@ public class Employee {
         this.createdDate = LocalDateTime.now().toString();
     }
 
+    // private String[] positions;
+
     public Employee(String employeeFirstName, String employeeLastName, Address employeeAddress) {
         this.employeeFirstName = employeeFirstName;
         this.employeeLastName = employeeLastName;
         this.employeeAddress = employeeAddress;
         this.createdDate = LocalDateTime.now().toString();
     }
-
-    public Employee(String id, String employeeFirstName,
-                    String employeeLastName,
-                    double employeeSalary,
-                    Address employeeAddress,
-                    String primaryPosition
-            , boolean employeeStatus) {
+    public Employee(String id, String employeeFirstName, String employeeLastName, double employeeSalary, Address employeeAddress, String primaryPosition, boolean employeeStatus) {
         this.id = id;
         this.employeeFirstName = employeeFirstName;
         this.employeeLastName = employeeLastName;
@@ -57,6 +48,37 @@ public class Employee {
         this.primaryPosition = primaryPosition;
         this.employeeAddress = employeeAddress;
         this.employeeStatus = employeeStatus;
+    }
+
+    public Employee(String employeeFirstName, String employeeLastName, double employeeSalary, String employeeEmail, String primaryPosition, Address employeeAddress, boolean employeeStatus) {
+        this.employeeFirstName = employeeFirstName;
+        this.employeeLastName = employeeLastName;
+        this.employeeSalary = employeeSalary;
+        this.employeeEmail = employeeEmail;
+        this.primaryPosition = primaryPosition;
+        this.employeeAddress = employeeAddress;
+        this.employeeStatus = employeeStatus;
+        this.createdDate = LocalDateTime.now().toString();
+    }
+
+    public String getEmployeeEmail() {
+        return employeeEmail;
+    }
+
+    public void setEmployeeEmail(String employeeEmail) {
+        this.employeeEmail = employeeEmail;
+    }
+
+    public String getPrimaryPosition() {
+        return primaryPosition;
+    }
+
+    public void setPrimaryPosition(String primaryPosition) {
+        this.primaryPosition = primaryPosition;
+    }
+
+    public boolean isEmployeeStatus() {
+        return employeeStatus;
     }
 
     public String getEmployeeFirstName() {
