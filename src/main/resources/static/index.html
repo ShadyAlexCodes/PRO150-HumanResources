@@ -39,10 +39,6 @@
             }
         }
 
-        function sendIDToEdit(id) {
-            // localStorage.setItem("EmployeeIdForEditPage", id)
-            //setting EmployeeIdForEditPage as key and id as value in localStroage so you can access it globally
-        }
 
         function getAllEmployees() {
             fetch("api/employees/", {
@@ -156,36 +152,20 @@
                 document.getElementById('tableRowData').style.visibility='visible';
                 console.log("Not able to set visibility on selected object")
             }
+        }
+
+
+        //delete tr when you click the delete button, Database setup is still pending
+        $("#user_table").on('click', '.btnDelete', function () {
+            $(this).closest('tr').remove();
+        });
+
+        function sendIDToEdit(id) {
+            // localStorage.setItem("EmployeeIdForEditPage", id)
+            //setting EmployeeIdForEditPage as key and id as value in localStroage so you can access it globally
 
         }
 
-        //UPDATE/MODIFY
-        // function updateEntries() {
-        //     var id = document.getElementById("entry_id").value;
-        //     var name = document.getElementById("name_row_0").value;
-        //     var position = document.getElementById(" ").value;
-        //
-        //     var entry = {
-        //         "id": id,
-        //         "name": name
-        //     }
-        //     //AJAX
-        //     var xmlHTTP = new XMLHttpRequest();
-        //     xmlHTTP.open("PUT", "http://localhost:6060/" + id);
-        //     xmlHTTP.setRequestHeader("Content-Type", "application/json");
-        //     xmlHTTP.setRequestHeader('Authorization', localStorage.getItem("key"));
-        //     xmlHTTP.onreadystatechange = function () {
-        //         console.log("Ready State: ", this.status);
-        //         if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-        //             //entry created
-        //             console.log("entry has been posted");
-        //             getEntries();
-        //         }
-        //     }
-        //     xmlHTTP.send(JSON.stringify(entry));
-        // }
-
-        //DELETE
 
 
 
@@ -241,9 +221,6 @@ Header and Navigation Bar
                 <td>
                     <div class="d-flex align-items-center">
                         <div class="ms-3">
-                            <!-- Would we have to create a row per each entry? then name_row_1, row_2, row_3, etc?
-                             mmmmm. that feels like bad programming xD-->
-                            <!--                            -->
 
                             <p id=name_row_0 class="fw-bold mb-1">First + Last Name</p>
                             <p class="text-muted mb-0">Email Address</p>
@@ -267,7 +244,7 @@ Header and Navigation Bar
                     </button>
                     <button
                             type="button"
-                            class="btn btn-rounded btn-sm fw-bold btn-danger"
+                            class="btnDelete btn-rounded btn-sm fw-bold btn-danger"
                             data-mdb-ripple-color="dark">Delete
                     </button>
                 </td>
