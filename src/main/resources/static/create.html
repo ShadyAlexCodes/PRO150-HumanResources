@@ -4,7 +4,7 @@
     function validation() {
         //user info
         var fNameInput = document.getElementById("fName");
-        var lNameInput = document.getElementById("lname");
+        var lNameInput = document.getElementById("lName");
         var pwdInput = document.getElementById("pwd");
         var pwdConfirmInput = document.getElementById("pwdConfirm")
         var emailInput = document.getElementById("email");
@@ -26,10 +26,10 @@
             return false;
         }
         //password input not null validation
-        if (pwdInput.value == null || pwdInput.value === "") {
-            alert("Password must be filled out");
-            return false;
-        }
+        // if (pwdInput.value == null || pwdInput.value === "") {
+        //     alert("Password must be filled out");
+        //     return false;
+        // }
         //confirm password input not null validation
         // if (pwdConfirmInput.value == null || pwdConfirmInput.value === "") {
         //     alert("Username must be filled out");
@@ -80,32 +80,28 @@
         //a dictionary is similar to a list but dictionary uses key-value pair to store data, essentially json,
         // in this case, validatedNewUser.fName stores the value of fNameInput.value, which is what the user entered after it passes all the validation above
         var validatedNewUser = {
-            employeeFName: fNameInput.value,
-            employeeLName: lNameInput.value,
-            employeePwd: pwdInput.value,
+            employeeFirstName: fNameInput.value,
+            employeeLastName: lNameInput.value,
+            employeeSalary: 0.0,
             employeeEmail: emailInput.value,
+            primaryPosition: "Intern",
             employeeAddress: {
                 "street": addressInput.value,
                 "city": cityInput.value,
                 "state": stateInput.value,
                 "zipCode": zipCodeInput.value
             },
-            status: true,
-            isAdmin: false,
-            employeePosition: "Intern",
-            employeeSalary: 0.0,
-            createdDate: "today", //TODO get current date and time
-            lastUpdatedData: "tmrw" //TODO same function as above
+            employeeStatus: true,
         }
         console.log("validatedNewUser: ");
         console.log(validatedNewUser);
         sendUser(validatedNewUser);
-
     }
 
     //this function should send the validated user data to the server as obj in body but for some reason it's sending it as key-value pair in the link
+
     function sendUser(user) {
-        fetch('http://localhost:6060/ERS/addEmployee', {
+        fetch('/api/employees/', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json, text/plain, */*',
@@ -146,7 +142,6 @@
 
 <div class="d-flex justify-content-evenly">
     <!--        <form method="post" onsubmit="return validateNotNull()">-->
-    <form>
         <!--
         for="fname" and id="fname" associate the label with the input
         while name="fname" is what user input since fname is a text input
@@ -154,7 +149,7 @@
         <label for="fname" class="form-label">First name</label>
         <input
                 type="text"
-                id="fname"
+                id="fName"
                 name="fname"
                 placeholder="First Name"
                 class="form-control"
@@ -164,7 +159,7 @@
         <label for="lname" class="form-label">Last name</label>
         <input
                 type="text"
-                id="lname"
+                id="lName"
                 name="lname"
                 placeholder="Last Name"
                 class="form-control"
@@ -246,7 +241,7 @@
 
         <!--        <input type="submit" value="Submit">-->
         <button onclick="validation()">Register</button>
-    </form>
+
 </div>
 
 
