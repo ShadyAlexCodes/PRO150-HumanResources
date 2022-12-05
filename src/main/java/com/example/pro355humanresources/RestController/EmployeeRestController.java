@@ -75,6 +75,76 @@ public class EmployeeRestController {
 
     }
 
+    @GetMapping(path = "/employees/totalemployees")
+    public ResponseEntity<Integer> getTotalEmployees() throws IOException {
+        LOG.info("Getting Total Employees: ---");
+        try {
+            List<Employee> employees = new ArrayList<Employee>();
+            employees.addAll(employeeRepo.findAll());
+            return new ResponseEntity<>(employees.size(), HttpStatus.OK);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+    }
+
+    @GetMapping(path = "employees/averageincome")
+    public ResponseEntity<Double> getAverageIncome() throws IOException {
+        LOG.info("Getting Average Income: ---");
+        try {
+            List<Employee> employees = new ArrayList<Employee>();
+            employees.addAll(employeeRepo.findAll());
+            double total = 0;
+            for (Employee employee : employees) {
+                total += employee.getEmployeeSalary();
+            }
+            double average = total / employees.size();
+            //round to 2 decimal places
+            average = Math.round(average * 100.0) / 100.0;
+            return new ResponseEntity<>(average, HttpStatus.OK);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+    }
+
+    @GetMapping(path = "/employees/totalteams")
+    public ResponseEntity<Integer> getTotalTeams() throws IOException {
+        LOG.info("Getting Total Teams: ---");
+try {
+            List<Employee> employees = new ArrayList<Employee>();
+            employees.addAll(employeeRepo.findAll());
+            List<String> teams = new ArrayList<>();
+            for (Employee employee : employees) {
+                if (!teams.contains(employee.getEmployeeTeam())) {
+                    teams.add(employee.getEmployeeTeam());
+                }
+            }
+            return new ResponseEntity<>(teams.size(), HttpStatus.OK);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+
+    }
+
+    @GetMapping(path = "/employees/totalenabled")
+public ResponseEntity<Integer> getTotalenabled() throws IOException {
+        LOG.info("Getting Total Active Employees: ---");
+        try {
+            List<Employee> employees = new ArrayList<Employee>();
+            employees.addAll(employeeRepo.findByEmployeeStatus(true));
+            return new ResponseEntity<>(employees.size(), HttpStatus.OK);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+    }
+
 
     @GetMapping(path = "/employees/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") String id) throws IOException {
