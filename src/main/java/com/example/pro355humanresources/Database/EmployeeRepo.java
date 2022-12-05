@@ -10,6 +10,7 @@ public interface EmployeeRepo
 
     List<Employee> findAllByEmployeeFirstNameContainingIgnoreCase(String employeeLastName);
     List<Employee> findAllByEmployeeLastNameContainingIgnoreCase(String employeeLastName);
+    List<Employee> findAllByEmployeeTeamContainingIgnoreCase(String team);
     List<Employee> findByEmployeeStatus(boolean enabled);
 
 }

@@ -73,7 +73,6 @@
     </style>
 
 
-
     <script>
         //creating a employee class to hold all the data, can't use the same class in java because javascrpit dosent like it
 
@@ -184,7 +183,7 @@
 
                 <td>${employee.employeeEmail}</td>
 
-                <td>${employee.primaryPosition}</td>
+                <td>${employee.employeeTeam}</td>
 
                 <td>$${employee.employeeSalary}</td>
 
@@ -195,7 +194,7 @@
                 <td>
                                     <button
                             type="button"
-                            onclick="getCurrentRowEmployee(1)"
+                            onclick="getCurrentRowEmployee('${employee.id}')"
                             class="btn btn-secondary btn-sm btn-rounded"
                     >
                         <i class="fa fa-wrench" aria-hidden="true"></i>
@@ -204,7 +203,8 @@
                     <button
                             type="button"
                             class="btn btn-danger btn-sm btn-rounded"
-                            data-mdb-ripple-color="dark">
+                            onclick="deleteUser('${employee.id}')"
+                            >
                             <i class="fa fa-trash" aria-hidden="true"></i>
                     </button>
                 </td>
@@ -212,6 +212,25 @@
 `
                 tblData.innerHTML += row_html;
             }
+        }
+
+
+        // Make a DELETE request to the endpoint /api/employees/{id}
+        function deleteUser(id) {
+            console.log("DELETING: " + id);
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.open("DELETE", "/api/employees/" + id);
+            xmlHttp.onreadystatechange = function () {
+                console.log("Ready state: ", this.status)
+                if (this.readyState == XMLHttpRequest.DONE && this.status == 200) {
+                    console.log(id + " DELETED SUCCESSFULLY");
+                } else {
+                    console.log("failed to delete user");
+                    getAllEmployees();
+                }
+            }
+            xmlHttp.send();
+
         }
 
     </script>
@@ -269,15 +288,19 @@
             <div class="d-flex flex-wrap justify-content-center mb-md-0 me-md-auto ">
                 <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
                     <button class="btn btn-white"><i class="fa fa-user p-2" aria-hidden="true"></i>
-                        My Profile</button>
+                        My Profile
+                    </button>
                 </div>
                 <ul class="nav">
                     <button class="btn btn-white m-1"><i class="fa fa-address-book p-2" aria-hidden="true"></i>
-                        Employees</button>
+                        Employees
+                    </button>
                     <button class="btn btn-white m-1"><i class="fa fa-users p-2" aria-hidden="true"></i>
-                        Teams</button>
+                        Teams
+                    </button>
                     <button class="btn btn-white m-1"><i class="fa fa-line-chart p-2" aria-hidden="true"></i>
-                        Analytics</button>
+                        Analytics
+                    </button>
                 </ul>
             </div>
         </section>
@@ -321,9 +344,18 @@
         </div>
 
         <div class="container my-5 px-0">
-            <div class="input-group mb-3">
-                <input id="search-input" type="text" class="form-control" placeholder="Search by Name"
-                       aria-label="Username" aria-describedby="basic-addon1" onkeyup="getAllEmployees()">
+            <div class="row">
+                <div class="col-10">
+                    <div class="input-group mb-3">
+                        <input id="search-input" type="text" class="form-control" placeholder="Search by Name"
+                               aria-label="Username" aria-describedby="basic-addon1" onkeyup="getAllEmployees()">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="d-grid">
+                        <button class="btn btn-outline-primary" onclick="window.location.href='create.html'">Create Employee</button>
+                    </div>
+                </div>
             </div>
             <div class="shadow-4 overflow-hidden">
                 <table class="table align-middle table-hover mb-0 bg-white" id="user_table">

@@ -18,13 +18,15 @@ public class Employee {
     private String employeeLastName;
     private double employeeSalary;
     private String employeeEmail;
-    private String primaryPosition;
+    private String employeeTeam;
     private Address employeeAddress;
     private boolean employeeStatus;
     private String createdDate;
     private String modifiedDate;
+
     public Employee() {
     }
+
     public Employee(String employeeFirstName, String employeeLastName) {
         this.employeeFirstName = employeeFirstName;
         this.employeeLastName = employeeLastName;
@@ -40,22 +42,23 @@ public class Employee {
         this.employeeAddress = employeeAddress;
         this.createdDate = LocalDateTime.now().toString();
     }
-    public Employee(String id, String employeeFirstName, String employeeLastName, double employeeSalary, Address employeeAddress, String primaryPosition, boolean employeeStatus) {
+
+    public Employee(String id, String employeeFirstName, String employeeLastName, double employeeSalary, Address employeeAddress, String employeeTeam, boolean employeeStatus) {
         this.id = id;
         this.employeeFirstName = employeeFirstName;
         this.employeeLastName = employeeLastName;
         this.employeeSalary = employeeSalary;
-        this.primaryPosition = primaryPosition;
+        this.employeeTeam = employeeTeam;
         this.employeeAddress = employeeAddress;
         this.employeeStatus = employeeStatus;
     }
 
-    public Employee(String employeeFirstName, String employeeLastName, double employeeSalary, String employeeEmail, String primaryPosition, Address employeeAddress, boolean employeeStatus) {
+    public Employee(String employeeFirstName, String employeeLastName, double employeeSalary, String employeeEmail, String employeeTeam, Address employeeAddress, boolean employeeStatus) {
         this.employeeFirstName = employeeFirstName;
         this.employeeLastName = employeeLastName;
         this.employeeSalary = employeeSalary;
         this.employeeEmail = employeeEmail;
-        this.primaryPosition = primaryPosition;
+        this.employeeTeam = employeeTeam;
         this.employeeAddress = employeeAddress;
         this.employeeStatus = employeeStatus;
         this.createdDate = LocalDateTime.now().toString();
@@ -69,12 +72,12 @@ public class Employee {
         this.employeeEmail = employeeEmail;
     }
 
-    public String getPrimaryPosition() {
-        return primaryPosition;
+    public String getEmployeeTeam() {
+        return employeeTeam;
     }
 
-    public void setPrimaryPosition(String primaryPosition) {
-        this.primaryPosition = primaryPosition;
+    public void setEmployeeTeam(String employeeTeam) {
+        this.employeeTeam = employeeTeam;
     }
 
     public boolean isEmployeeStatus() {
@@ -106,11 +109,11 @@ public class Employee {
     }
 
     public String getEmployeePosition() {
-        return primaryPosition;
+        return employeeTeam;
     }
 
     public void setEmployeePosition(String employeePosition) {
-        this.primaryPosition = employeePosition;
+        this.employeeTeam = employeePosition;
     }
 
     public Address getEmployeeAddress() {
@@ -155,6 +158,6 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee{" + "employeeFirstName='" + employeeFirstName + '\'' + ", employeeLastName='" + employeeLastName + '\'' + ", employeeSalary=" + employeeSalary + ", employeePosition='" + primaryPosition + '\'' + ", employeeAddress=" + employeeAddress + ", employeeStatus=" + employeeStatus + ", createdDate='" + createdDate + '\'' + ", modifiedDate='" + modifiedDate + '\'' + '}';
+        return "Employee{" + "employeeFirstName='" + employeeFirstName + '\'' + ", employeeLastName='" + employeeLastName + '\'' + ", employeeSalary=" + employeeSalary + ", employeePosition='" + employeeTeam + '\'' + ", employeeAddress=" + employeeAddress + ", employeeStatus=" + employeeStatus + ", createdDate='" + createdDate + '\'' + ", modifiedDate='" + modifiedDate + '\'' + '}';
     }
 }

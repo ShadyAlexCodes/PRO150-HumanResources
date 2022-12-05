@@ -36,10 +36,10 @@ public class EmployeeRestController {
      * <p>
      * This method will return JSON data and an HTTP Status
      *
-     * @param   firstName       query by first name
-     * @param   lastName        query by last name
-     * @return                  results and http status
-     * @throws  IOException
+     * @param firstName query by first name
+     * @param lastName  query by last name
+     * @return results and http status
+     * @throws IOException
      */
     @GetMapping(path = "/employees")
     public ResponseEntity<List<Employee>> getAllEmployees(@RequestParam(required = false) String firstName, @RequestParam(required = false) String lastName) throws IOException {
@@ -48,10 +48,11 @@ public class EmployeeRestController {
             List<Employee> employees = new ArrayList<Employee>();
 
             if (firstName == null && lastName == null) employees.addAll(employeeRepo.findAll());
-            else if (firstName != null) employees.addAll(employeeRepo.findAllByEmployeeFirstNameContainingIgnoreCase(firstName));
+            else if (firstName != null)
+                employees.addAll(employeeRepo.findAllByEmployeeFirstNameContainingIgnoreCase(firstName));
             else employees.addAll(employeeRepo.findAllByEmployeeLastNameContainingIgnoreCase(lastName));
             //Give front end an empty array if no employees are found instead of no content status
-           // if (employees.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            // if (employees.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             if (employees.isEmpty()) return new ResponseEntity<>(employees, HttpStatus.OK);
 
             return new ResponseEntity<>(employees, HttpStatus.OK);
@@ -61,6 +62,19 @@ public class EmployeeRestController {
 
         }
     }
+    //my thought process is that /{id} might have the original ur l(/{team}) not working so I changed it
+    @GetMapping(path = "/employees/team/{team}")
+    public ResponseEntity<List<Employee>> getEmployeesByPosition(@PathVariable("team") String team) {
+        LOG.info("Finding Employees by team");
+        if (team != null) {
+            List<Employee> employees = new ArrayList<>(employeeRepo.findAllByEmployeeTeamContainingIgnoreCase(team));
+            return new ResponseEntity<>(employees, HttpStatus.OK);
+        } else  {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
 
     @GetMapping(path = "/employees/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable("id") String id) throws IOException {
@@ -73,14 +87,13 @@ public class EmployeeRestController {
         return employeeData.map(employee -> new ResponseEntity<>(employee, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping(path="/employees/enabled")
+    @GetMapping(path = "/employees/enabled")
     public ResponseEntity<List<Employee>> getEnabledEmployees() {
         LOG.info("Find Enabled Employees: ---");
         try {
             List<Employee> employees = employeeRepo.findByEmployeeStatus(true);
 
-            if(employees.isEmpty())
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            if (employees.isEmpty()) return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
             return new ResponseEntity<>(employees, HttpStatus.OK);
         } catch (Exception exception) {
@@ -106,13 +119,13 @@ public class EmployeeRestController {
     public ResponseEntity<Employee> updateById(@PathVariable("id") String id, @RequestBody Employee employee) {
         Optional<Employee> employeeData = employeeRepo.findById(id);
 
-        if(employeeData.isPresent()) {
+        if (employeeData.isPresent()) {
             Employee updatedEmployee = employeeData.get();
             updatedEmployee.setEmployeeFirstName(employee.getEmployeeFirstName());
             updatedEmployee.setEmployeeLastName(employee.getEmployeeLastName());
             updatedEmployee.setEmployeeAddress(employee.getEmployeeAddress());
             updatedEmployee.setEmployeeSalary(employee.getEmployeeSalary());
-            updatedEmployee.setEmployeePosition(employee.getEmployeePosition());
+            updatedEmployee.setEmployeeTeam(employee.getEmployeeTeam());
             updatedEmployee.setModifiedDate(LocalDateTime.now().toString());
             return new ResponseEntity<>(employeeRepo.save(updatedEmployee), HttpStatus.OK);
         } else {
@@ -133,7 +146,7 @@ public class EmployeeRestController {
 
     @DeleteMapping(path = "/employees/{id}")
     public ResponseEntity<HttpStatus> deleteById(@PathVariable("id") String id) {
-        LOG.warn("ALL EMPLOYEES HAVE BEEN DELETED");
+        LOG.warn("THE EMPLOYEE " + id + " HAS BEEN DELETED");
         try {
             employeeRepo.deleteById(id);
             return new ResponseEntity<>(HttpStatus.I_AM_A_TEAPOT);
@@ -157,21 +170,13 @@ public class EmployeeRestController {
                 String address = faker.name().firstName();
                 boolean status = faker.bool().bool();
 
-               createEmployee(new Employee(
-                       firstName,
-                       lastName,
-                       salary,
-                       email,
-                       position,
-                       new Address(faker.address().streetAddressNumber(), faker.address().streetName(), faker.address().city(), faker.address().state(), faker.address().zipCode()),
-                       status));
+                createEmployee(new Employee(firstName, lastName, salary, email, position, new Address(faker.address().streetAddressNumber(), faker.address().streetName(), faker.address().city(), faker.address().state(), faker.address().zipCode()), status));
             }
             return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (Exception exception) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
 
 
     }
