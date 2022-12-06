@@ -76,7 +76,7 @@ public class EmployeeRestController {
 
     }
 
-    @GetMapping(path = "/employees/totalEmployees")
+    @GetMapping(path = "/employees/totalemployees")
     public ResponseEntity<Integer> getTotalEmployees() throws IOException {
         LOG.info("Getting Total Employees: ---");
         try {

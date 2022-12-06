@@ -74,8 +74,7 @@
 
 
     <script>
-        //creating a employee class to hold all the data, can't use the same class in java because javascrpit dosent like it
-
+        //creating a employee class to hold all the data, can't use the same class in java because javascrpit dosent like it=
         class Employee {
             constructor(
                 id,
@@ -83,7 +82,7 @@
                 employeeLastName,
                 employeeSalary,
                 employeeEmail,
-                primaryPosition,
+                employeeTeam,
                 employeeAddress,
                 employeeStatus,
                 createdDate,
@@ -93,17 +92,12 @@
                 this.employeeLastName = employeeLastName;
                 this.employeeSalary = employeeSalary;
                 this.employeeEmail = employeeEmail;
-                this.primaryPosition = primaryPosition;
+                this.employeeTeam = employeeTeam;
                 this.employeeAddress = employeeAddress;
                 this.employeeStatus = employeeStatus;
                 this.createdDate = createdDate;
                 this.modifiedDate = modifiedDate;
             }
-        }
-
-        function sendIDToEdit(id) {
-            // localStorage.setItem("EmployeeIdForEditPage", id)
-            //setting EmployeeIdForEditPage as key and id as value in localStroage so you can access it globally
         }
 
         function getAllEmployees() {
@@ -133,7 +127,7 @@
                             data[i].employeeLastName,
                             data[i].employeeSalary,
                             data[i].employeeEmail,
-                            data[i].primaryPosition,
+                            data[i].employeeTeam,
                             data[i].employeeAddress,
                             data[i].employeeStatus,
                             data[i].createdDate,
@@ -146,6 +140,10 @@
                     console.log(employeeList);
 
                     renderEmployees(employeeList);
+                    totalEmployees();
+                    totalTeams();
+                    averageSalary();
+                    totalActiveAccounts();
                 })
                 .catch(error => console.log(error));
         }
@@ -214,7 +212,6 @@
             }
         }
 
-
         // Make a DELETE request to the endpoint /api/employees/{id}
         function deleteUser(id) {
             console.log("DELETING: " + id);
@@ -232,6 +229,76 @@
             xmlHttp.send();
 
         }
+
+        function totalEmployees() {
+            fetch("api/employees/totalemployees", {
+                method: "GET",
+                mode: "no-cors", //get rid of cors error
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => response.json())
+                .then(data => {
+                    console.log("Total Employees: " + data)
+                    document.getElementById("totalEmployees").innerText = data;
+                })
+                .catch(error => {
+                    console.log("Error:: " + error);
+                });
+        }
+
+        function totalTeams() {
+            fetch("api/employees/totalteams", {
+                method: "GET",
+                mode: "no-cors", //get rid of cors error
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => response.json())
+                .then(data => {
+                    console.log("Total Teams: " + data)
+                    document.getElementById("totalTeams").innerText = data;
+                })
+                .catch(error => {
+                    console.log("Error:: " + error);
+                });
+        }
+
+        function totalActiveAccounts() {
+            fetch("api/employees/totalenabled", {
+                method: "GET",
+                mode: "no-cors", //get rid of cors error
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => response.json())
+                .then(data => {
+                    console.log("Total Teams: " + data)
+                    document.getElementById("totalenabled").innerText = data;
+                })
+                .catch(error => {
+                    console.log("Error:: " + error);
+                });
+        }
+
+        function averageSalary() {
+            fetch("api/employees/averageincome", {
+                method: "GET",
+                mode: "no-cors", //get rid of cors error
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => response.json())
+                .then(data => {
+                    console.log("Total Teams: " + data)
+                    document.getElementById("averageincome").innerText = data;
+                })
+                .catch(error => {
+                    console.log("Error:: " + error);
+                });
+        }
+
+
 
     </script>
 </head>
@@ -310,7 +377,7 @@
                 <div class="card">
                     <div class="card-body">
                         <p class="fw-bold card-title mb-1">Total Employees</p>
-                        <p id="employees" class="fw-bold mb-0 skeleton skeleton-text"></p>
+                        <p id="totalEmployees" class="fw-bold mb-0"></p>
                     </div>
                 </div>
             </div>
@@ -319,7 +386,7 @@
                 <div class="card">
                     <div class="card-body">
                         <p class="fw-bold card-title mb-1">Total Teams</p>
-                        <p id="team" class="fw-bold mb-0 skeleton skeleton-text"></p>
+                        <p id="totalTeams" class="fw-bold mb-0"></p>
                     </div>
                 </div>
             </div>
@@ -328,7 +395,7 @@
                 <div class="card">
                     <div class="card-body">
                         <p class="fw-bold card-title mb-1">Active Accounts</p>
-                        <p id="active" class="fw-bold mb-0 skeleton skeleton-text"></p>
+                        <p id="totalenabled" class="fw-bold mb-0"></p>
                     </div>
                 </div>
             </div>
@@ -337,7 +404,7 @@
                 <div class="card">
                     <div class="card-body">
                         <p class="fw-bold card-title mb-1">Lorem Ipsum</p>
-                        <p id="" class="fw-bold mb-0 skeleton skeleton-text"></p>
+                        <p id="averageincome" class="fw-bold mb-0"></p>
                     </div>
                 </div>
             </div>
