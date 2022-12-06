@@ -62,6 +62,7 @@ public class EmployeeRestController {
 
         }
     }
+
     //my thought process is that /{id} might have the original ur l(/{team}) not working so I changed it
     @GetMapping(path = "/employees/team/{team}")
     public ResponseEntity<List<Employee>> getEmployeesByPosition(@PathVariable("team") String team) {
@@ -69,18 +70,17 @@ public class EmployeeRestController {
         if (team != null) {
             List<Employee> employees = new ArrayList<>(employeeRepo.findAllByEmployeeTeamContainingIgnoreCase(team));
             return new ResponseEntity<>(employees, HttpStatus.OK);
-        } else  {
+        } else {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
 
-    @GetMapping(path = "/employees/totalemployees")
+    @GetMapping(path = "/employees/totalEmployees")
     public ResponseEntity<Integer> getTotalEmployees() throws IOException {
         LOG.info("Getting Total Employees: ---");
         try {
-            List<Employee> employees = new ArrayList<Employee>();
-            employees.addAll(employeeRepo.findAll());
+            List<Employee> employees = new ArrayList<Employee>(employeeRepo.findAll());
             return new ResponseEntity<>(employees.size(), HttpStatus.OK);
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -93,8 +93,7 @@ public class EmployeeRestController {
     public ResponseEntity<Double> getAverageIncome() throws IOException {
         LOG.info("Getting Average Income: ---");
         try {
-            List<Employee> employees = new ArrayList<Employee>();
-            employees.addAll(employeeRepo.findAll());
+            List<Employee> employees = new ArrayList<Employee>(employeeRepo.findAll());
             double total = 0;
             for (Employee employee : employees) {
                 total += employee.getEmployeeSalary();
@@ -113,9 +112,8 @@ public class EmployeeRestController {
     @GetMapping(path = "/employees/totalteams")
     public ResponseEntity<Integer> getTotalTeams() throws IOException {
         LOG.info("Getting Total Teams: ---");
-try {
-            List<Employee> employees = new ArrayList<Employee>();
-            employees.addAll(employeeRepo.findAll());
+        try {
+            List<Employee> employees = new ArrayList<Employee>(employeeRepo.findAll());
             List<String> teams = new ArrayList<>();
             for (Employee employee : employees) {
                 if (!teams.contains(employee.getEmployeeTeam())) {
@@ -132,11 +130,10 @@ try {
     }
 
     @GetMapping(path = "/employees/totalenabled")
-public ResponseEntity<Integer> getTotalenabled() throws IOException {
+    public ResponseEntity<Integer> getTotalEnabled() throws IOException {
         LOG.info("Getting Total Active Employees: ---");
         try {
-            List<Employee> employees = new ArrayList<Employee>();
-            employees.addAll(employeeRepo.findByEmployeeStatus(true));
+            List<Employee> employees = new ArrayList<Employee>(employeeRepo.findByEmployeeStatus(true));
             return new ResponseEntity<>(employees.size(), HttpStatus.OK);
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -240,7 +237,7 @@ public ResponseEntity<Integer> getTotalenabled() throws IOException {
                 String address = faker.name().firstName();
                 boolean status = faker.bool().bool();
 
-                createEmployee(new Employee(firstName, lastName, salary, email, position, new Address(faker.address().streetAddressNumber(), faker.address().streetName(), faker.address().city(), faker.address().state(), faker.address().zipCode()), status));
+                createEmployee(new Employee(firstName, lastName, salary, email, position, new Address(faker.address().streetName(), faker.address().city(), faker.address().state(), faker.address().zipCode()), status));
             }
             return new ResponseEntity<>(HttpStatus.OK);
 

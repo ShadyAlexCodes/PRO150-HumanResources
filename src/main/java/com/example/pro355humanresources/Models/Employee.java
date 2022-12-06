@@ -51,6 +51,8 @@ public class Employee {
         this.employeeTeam = employeeTeam;
         this.employeeAddress = employeeAddress;
         this.employeeStatus = employeeStatus;
+        this.createdDate = LocalDateTime.now().toString();
+        this.modifiedDate = "Never";
     }
 
     public Employee(String employeeFirstName, String employeeLastName, double employeeSalary, String employeeEmail, String employeeTeam, Address employeeAddress, boolean employeeStatus) {
@@ -62,6 +64,7 @@ public class Employee {
         this.employeeAddress = employeeAddress;
         this.employeeStatus = employeeStatus;
         this.createdDate = LocalDateTime.now().toString();
+        this.modifiedDate = "Never";
     }
 
     public String getEmployeeEmail() {
@@ -106,14 +109,6 @@ public class Employee {
 
     public void setEmployeeSalary(double employeeSalary) {
         this.employeeSalary = employeeSalary;
-    }
-
-    public String getEmployeePosition() {
-        return employeeTeam;
-    }
-
-    public void setEmployeePosition(String employeePosition) {
-        this.employeeTeam = employeePosition;
     }
 
     public Address getEmployeeAddress() {
