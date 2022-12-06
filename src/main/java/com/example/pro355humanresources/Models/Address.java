@@ -10,20 +10,11 @@ public class Address {
     public Address() {
     }
 
-    public Address(String streetNumber, String streetName, String city, String state, String zipcode) {
-        this.streetNumber = streetNumber;
+    public Address(String streetName, String city, String state, String zipcode) {
         this.streetName = streetName;
         this.city = city;
         this.state = state;
         this.zipcode = zipcode;
-    }
-
-    public String getStreetNumber() {
-        return streetNumber;
-    }
-
-    public void setStreetNumber(String streetNumber) {
-        this.streetName = streetNumber;
     }
 
     public String getStreetName() {
