@@ -13,6 +13,12 @@
         var stateInput = document.getElementById("state")
         var zipCodeInput = document.getElementById("zipcode")
 
+        // extra
+        let positionInput = document.getElementById("position");
+        let salaryInput = document.getElementById("salary");
+        let isActiveInput = document.getElementById("isActive");
+
+
         //first name input not null validation
         if (fNameInput.value == null || fNameInput.value === "") {
             alert("First Name must be filled out");
@@ -58,6 +64,11 @@
             alert("Zip Code must be filled out");
             return false;
         }
+
+        if (positionInput.value == null || positionInput.value === "") {
+            alert("The position must be filled out");
+            return false;
+        }
         console.log("validation passed");
         // if all the above conditions are met, create a dictionary with all the data and then call the function to post the data to the server
         //a dictionary is similar to a list but dictionary uses key-value pair to store data, essentially json,
@@ -65,16 +76,17 @@
         var validatedNewUser = {
             employeeFirstName: fNameInput.value,
             employeeLastName: lNameInput.value,
-            employeeSalary: 0.0,
+            employeeSalary: salaryInput.value,
             employeeEmail: emailInput.value,
-            employeeTeam: "Intern",
+            employeeTeam: positionInput.value,
+
             employeeAddress: {
                 "city": cityInput.value,
                 "state": stateInput.value,
                 "streetName": addressInput.value,
                 "zipcode": zipCodeInput.value
             },
-            employeeStatus: true,
+            employeeStatus: isActiveInput.checked,
             createdDate: new Date(),
             modifiedDate: new Date()
 
@@ -96,7 +108,8 @@
             body: JSON.stringify(user)
         }).then(response => response.json())
             .then(response =>
-                window.location.href = 'index.html')
+              window.location.href = 'index.html'
+           )
             .catch(error => console.log(error));
     }
 
