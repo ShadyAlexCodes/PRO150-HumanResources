@@ -1,7 +1,6 @@
 package com.example.pro355humanresources.Models;
 
 public class Address {
-    private String streetNumber;
     private String streetName;
     private String city;
     private String state;
@@ -49,4 +48,15 @@ public class Address {
         zipcode = zipcode;
     }
 
+
+    @Override
+    public String toString() {
+        return "Address{" +
+
+                ", streetName='" + streetName + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                '}';
+    }
 }

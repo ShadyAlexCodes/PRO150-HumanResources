@@ -50,6 +50,7 @@ public class Employee {
         this.employeeSalary = employeeSalary;
         this.employeeTeam = employeeTeam;
         this.employeeAddress = employeeAddress;
+        System.out.println("ATTEMPT: " + employeeAddress);
         this.employeeStatus = employeeStatus;
         this.createdDate = LocalDateTime.now().toString();
         this.modifiedDate = "Never";
@@ -63,8 +64,9 @@ public class Employee {
         this.employeeTeam = employeeTeam;
         this.employeeAddress = employeeAddress;
         this.employeeStatus = employeeStatus;
+        System.out.println("ATTEMPT: " + employeeAddress);
         this.createdDate = LocalDateTime.now().toString();
-        this.modifiedDate = "Never";
+        this.modifiedDate = LocalDateTime.now().toString();
     }
 
     public String getEmployeeEmail() {

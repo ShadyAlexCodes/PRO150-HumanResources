@@ -7,7 +7,7 @@
             employeeLastName,
             employeeSalary,
             employeeEmail,
-            primaryPosition,
+            employeeTeam,
             employeeAddress,
             employeeStatus,
             createdDate,
@@ -17,7 +17,7 @@
             this.employeeLastName = employeeLastName;
             this.employeeSalary = employeeSalary;
             this.employeeEmail = employeeEmail;
-            this.primaryPosition = primaryPosition;
+            this.employeeTeam = employeeTeam;
             this.employeeAddress = employeeAddress;
             this.employeeStatus = employeeStatus;
             this.createdDate = createdDate;
@@ -45,7 +45,7 @@
                     data.employeeLastName,
                     data.employeeSalary,
                     data.employeeEmail,
-                    data.primaryPosition,
+                    data.employeeTeam,
                     data.employeeAddress,
                     data.employeeStatus,
                     data.createdDate,
@@ -54,7 +54,7 @@
                 renderEmployee(employee)
             })
             .catch(error => {
-                window.location.href = 'index.html'
+              //  window.location.href = 'index.html'
             });
     }
 
@@ -68,7 +68,8 @@
         document.getElementById("email").placeholder = employeeData.employeeEmail;
         document.getElementById("salary").placeholder = employeeData.employeeSalary;
         // document.getElementById("address").placeholder = employee.employeeAddress.streetNumber +" " + employee.employeeAddress.streetName;
-        document.getElementById("address").placeholder = employeeData.employeeAddress.streetNumber + " " + employeeData
+        console.log("GETTING ADDRESS INFO: " + employeeData.employeeAddress.state)
+        document.getElementById("address").placeholder = employeeData
             .employeeAddress.streetName;
         document.getElementById("city").placeholder = employeeData.employeeAddress.city;
         document.getElementById("state").placeholder = employeeData.employeeAddress.state;
@@ -80,6 +81,8 @@
 
         //setting the check boxed
         document.getElementById("isActive").checked = !!employeeData.employeeStatus;
+
+        console.log("ACTIVE: " + document.getElementById("isActive").checked);
 
         //setting the dropdown
         const $select = document.querySelector('#position');
@@ -95,11 +98,9 @@
         let emailInput = document.getElementById("email");
         let salaryInput = document.getElementById("salary");
         let addressInput = document.getElementById("address");
-        let stNumberInput = document.getElementById("stNumber");
-        let stNameInput = document.getElementById("stName");
         let cityInput = document.getElementById("city");
         let stateInput = document.getElementById("state");
-        let zipCodeInput = document.getElementById("zip");
+        let zipCodeInput = document.getElementById("zipcode");
         let positionInput = document.getElementById("position");
         let isActiveInput = document.getElementById("isActive");
 
@@ -160,6 +161,10 @@
         //ignoring status and positions for now, I don't think they need one
 
         console.log("Formatting....");
+        console.log("active: " + isActiveInput.checked)
+
+
+        console.log("ACTIVE: " + document.getElementById("isActive").checked);
 
         var validatedUser = {
             employeeFirstName: fNameInput.value,
@@ -167,14 +172,13 @@
             employeeEmail: emailInput.value,
             employeeSalary: salaryInput.value,
             employeeAddress: {
-                streetNumber: stNumberInput.value,
-                streetName: stNameInput.value,
+                streetName: addressInput.value,
                 city: cityInput.value,
                 state: stateInput.value,
                 zipcode: zipCodeInput.value
             },
             employeeTeam: positionInput.value,
-            employeeStatus: isActiveInput.checked
+            employeeStatus: document.getElementById("isActive").checked
         }
 
         console.log("Formatted: ")
@@ -183,9 +187,12 @@
     }
 
     function sendUser(user) {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const id = urlParams.get('id');
 
         //send the user to the server
-        fetch("http://localhost:8080/api/employees/{id}", {
+        fetch("http://localhost:8080/api/employees/" + id, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -198,7 +205,7 @@
                 console.log("User updated");
 
                 //close the edit page and go back to index.html
-                window.location.href = "index.html";
+               // window.location.href = "index.html";
 
             } else {
                 console.log("User not updated");
@@ -356,7 +363,7 @@
             <div class="row">
                 <div class="col-12">
                     <h3>General Information</h3>
-                    <form class="needs-validation" novalidate="">
+
                         <div class="row g-3">
                             <div class="col-sm-6">
                                 <label for="firstName" class="form-label">First name</label>
@@ -451,10 +458,9 @@
                             </div>
 
                             <div class="col-md-2">
+
                                 <label for="isActive" class="form-label">Employee Status</label>
-                                <br />
                                 <input type="checkbox" class="form-check-input" id="isActive">
-                                <label for="isActive" class="form-label">Toggle Status</label>
                                 <div class="invalid-feedback">
                                     Please provide a valid position.
                                 </div>
@@ -462,8 +468,8 @@
                         </div>
                         <hr class="my-4">
 
-                        <button class="w-100 btn btn-primary btn-lg" type="submit">Update User</button>
-                    </form>
+                        <button class="w-100 btn btn-primary btn-lg" onclick="validation()">Update User</button>
+
                 </div>
             </div>
         </div>

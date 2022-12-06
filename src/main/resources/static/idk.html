@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<script>
+
+  function renderEmployee() {
+    let employee = JSON.parse(localStorage.getItem("currentEmployee"));
+    //delete currentEmployee from local storage
+    localStorage.removeItem("currentEmployee");
+
+    console.log(employee);
+
+    //setting the place holder for the input fields
+    document.getElementById("fname").placeholder = employee.employeeFirstName;
+    document.getElementById("lname").placeholder = employee.employeeLastName;
+    document.getElementById("email").placeholder = employee.employeeEmail;
+    document.getElementById("salary").placeholder = employee.employeeSalary;
+    // document.getElementById("address").placeholder = employee.employeeAddress.streetNumber +" " + employee.employeeAddress.streetName;
+    document.getElementById("stName").placeholder = employee.employeeAddress.streetName;
+    document.getElementById("stNumber").placeholder = employee.employeeAddress.streetNumber;
+    document.getElementById("city").placeholder = employee.employeeAddress.city;
+    document.getElementById("state").placeholder = employee.employeeAddress.state;
+    document.getElementById("zipcode").placeholder = employee.employeeAddress.zipcode;
+
+    //setting the check boxed
+    if(employee.employeeStatus){
+      document.getElementById("isActive").checked = true;
+    }else{
+      document.getElementById("isActive").checked = false;
+    }
+
+    //setting the dropdown
+    const $select = document.querySelector('#position');
+    $select.value = employee.employeeTeam;
+
+  }
+
+  //validation for userInput
+  function validation(){
+    //get all the input fields
+    let fNameInput = document.getElementById("fname");
+    let lNameInput = document.getElementById("lname");
+    let emailInput = document.getElementById("email");
+    let salaryInput = document.getElementById("salary");
+    let addressInput = document.getElementById("address");
+    let stNumberInput = document.getElementById("stNumber");
+    let stNameInput = document.getElementById("stName");
+    let cityInput = document.getElementById("city");
+    let stateInput = document.getElementById("state");
+    let zipCodeInput = document.getElementById("zip");
+    let positionInput = document.getElementById("position");
+    let isActiveInput = document.getElementById("isActive");
+
+    //if fname is null or empty
+    if (fNameInput.value == null || fNameInput.value === "") {
+      //set the value of the input to the value of the placeholder
+      fNameInput.value = fNameInput.placeholder;
+    }
+
+    //if lname is null or empty
+    if (lNameInput.value == null || lNameInput.value === "") {
+      //set the value of the input to the value of the placeholder
+      lNameInput.value = lNameInput.placeholder;
+    }
+
+    //if email is null or empty
+    if (emailInput.value == null || emailInput.value === "") {
+      //set the value of the input to the value of the placeholder
+      emailInput.value = emailInput.placeholder;
+    }
+
+    //if salary is null or empty
+    if (salaryInput.value == null || salaryInput.value === "") {
+      //set the value of the input to the value of the placeholder
+      salaryInput.value = salaryInput.placeholder;
+    }
+
+    //if address is null or empty
+    if (addressInput.value == null || addressInput.value === "") {
+      //set the value of the input to the value of the placeholder
+      addressInput.value = addressInput.placeholder;
+    }
+
+    //if city is null or empty
+    if (cityInput.value == null || cityInput.value === "") {
+      //set the value of the input to the value of the placeholder
+      cityInput.value = cityInput.placeholder;
+    }
+
+    //if state is null or empty
+    if (stateInput.value == null || stateInput.value === "") {
+      //set the value of the input to the value of the placeholder
+      stateInput.value = stateInput.placeholder;
+    }
+
+    //if zipcode is null or empty
+    if (zipCodeInput.value == null || zipCodeInput.value === "") {
+      //set the value of the input to the value of the placeholder
+      zipCodeInput.value = zipCodeInput.placeholder;
+    }
+
+    //if position is null or empty
+    if (positionInput.value == null || positionInput.value === "") {
+      //set the value of the input to the value of the placeholder
+      positionInput.value = positionInput.placeholder;
+    }
+
+    //ignoring status and positions for now, I don't think they need one
+
+    console.log("Formatting....");
+
+    var validatedUser = {
+      employeeFirstName: fNameInput.value,
+      employeeLastName: lNameInput.value,
+      employeeEmail: emailInput.value,
+      employeeSalary: salaryInput.value,
+      employeeAddress: {
+        streetNumber: stNumberInput.value,
+        streetName: stNameInput.value,
+        city: cityInput.value,
+        state: stateInput.value,
+        zipcode: zipCodeInput.value
+      },
+      employeeTeam: positionInput.value,
+      employeeStatus: isActiveInput.checked
+    }
+
+    console.log("Formatted: ")
+    console.log(validatedUser);
+    sendUser(validatedUser);
+  }
+
+  function sendUser(user){
+
+    //send the user to the server
+    fetch("http://localhost:8080/api/employees/{id}", {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(user)
+
+    }).then(function (response) {
+      console.log(response);
+      if (response.status === 200) {
+        console.log("User updated");
+
+        //close the edit page and go back to index.html
+        window.location.href = "index.html";
+
+      } else {
+        console.log("User not updated");
+      }
+    });
+
+  }
+
+</script>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Page</title>
+</head>
+
+<body onload="renderEmployee()">
+<h1 id="testOutput">Edit Page</h1>
+<form>
+  <label for="fname">First name</label>
+  <input
+          type="text"
+          id="fname"
+          name="fname"
+          placeholder= "First Name"
+  ><br>
+
+  <label for="lname">Last name</label>
+  <input
+          type="text"
+          id="lname"
+          name="lname"
+          placeholder= "Last Name"
+          class="form-control"
+  ><br>
+
+  <label for="email">Email</label>
+  <input
+          type="text"
+          id="email"
+          name="email"
+          placeholder= "E-mail"
+          class="form-control"
+
+  ><br>
+
+  <label for="salary">Salary</label>
+  <input
+          type="text"
+          id="salary"
+          name="salary"
+          placeholder= "Salary"
+          class="form-control"
+  ><br>
+
+  <label for="address">Street Number</label>
+  <input
+          type="text"
+          id="address"
+          name="address"
+          placeholder= "Address"
+          class="form-control"
+
+  ><br>
+
+  <label for="stNumber">Street Number</label>
+  <input
+          type="text"
+          id="stNumber"
+          name="stNumber"
+          placeholder= "Street Number"
+          class="form-control"
+  ><br>
+
+  <label for="stName">Street Name</label>
+  <input
+          type="text"
+          id="stName"
+          name="stName"
+          placeholder= "Street Name"
+          class="form-control"
+  ><br>
+
+  <label for="city">City</label>
+  <input
+          type="text"
+          id="city"
+          name="city"
+          placeholder= "City"
+          class="form-control"
+
+  ><br>
+
+  <label for="state">State</label>
+  <input
+          type="text"
+          id="state"
+          name="state"
+          placeholder= "State"
+          class="form-control"
+
+  ><br>
+
+  <label for="zipcode">Zip-Code</label>
+  <input
+          type="text"
+          id="zipcode"
+          name="zipcode"
+          placeholder= "Zip-Code"
+          class="form-control"
+
+  ><br>
+
+  <!--            comment out for no isAdmin field in employee-->
+  <!--            <label for="isAdmin">Employee Admin Permission</label>-->
+  <!--            <input-->
+  <!--                    type="checkbox"-->
+  <!--                    id="isAdmin"-->
+  <!--                    name="isAdmin"-->
+  <!--            ><br>-->
+
+  <label for="isActive">Employee Active Status</label>
+  <input
+          type="checkbox"
+          id="isActive"
+          name="isActive"
+          class="form-control"
+  ><br>
+
+  <label for="position">Position</label>
+
+  <!--                    select tag attribute area-->
+  <select
+          required
+          id="position"
+          name="position"
+          class="form-control">
+
+    <!--                inside select tag-->
+    <option value="Intern">Intern</option>
+    <option value="Associate">Associate</option>
+    <option value="Facilitator">"Facilitator"</option>
+    <option value="Junior">Junior</option>
+    <option value="Senior">Senior</option>
+    <option value="Manager">Manager</option>
+    <option value="Executive">Executive</option>
+
+  </select><br><br>
+
+  <button onclick="validation()">Confirm Changes</button>
+</form>
+</body>
+</html>

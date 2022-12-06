@@ -175,6 +175,12 @@ public class EmployeeRestController {
         LOG.info("Creating a new Employee: ---");
         try {
             Employee newEmployee = employeeRepo.save(employee);
+            System.out.println(newEmployee);
+            System.out.println(newEmployee.getEmployeeAddress());
+            System.out.println(newEmployee.getEmployeeAddress().getCity());
+            System.out.println(newEmployee.getEmployeeAddress().getState());
+            System.out.println(newEmployee.getEmployeeAddress().getZipcode());
+            System.out.println(newEmployee.getEmployeeAddress().getStreetName());
             return new ResponseEntity<>(newEmployee, HttpStatus.OK);
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -193,6 +199,7 @@ public class EmployeeRestController {
             updatedEmployee.setEmployeeAddress(employee.getEmployeeAddress());
             updatedEmployee.setEmployeeSalary(employee.getEmployeeSalary());
             updatedEmployee.setEmployeeTeam(employee.getEmployeeTeam());
+            updatedEmployee.setEmployeeStatus(employee.getEmployeeStatus());
             updatedEmployee.setModifiedDate(LocalDateTime.now().toString());
             return new ResponseEntity<>(employeeRepo.save(updatedEmployee), HttpStatus.OK);
         } else {

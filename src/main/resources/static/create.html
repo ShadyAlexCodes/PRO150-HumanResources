@@ -11,9 +11,13 @@
 
         //address info
         var addressInput = document.getElementById("address");
+        console.log("address: " + addressInput.value);
         var cityInput = document.getElementById("city");
+        console.log("city: " + cityInput.value);
         var stateInput = document.getElementById("state")
+        console.log("state: " + stateInput.value);
         var zipCodeInput = document.getElementById("zipCode")
+        console.log("address: " + zipCodeInput.value);
 
         //first name input not null validation
         if (fNameInput.value == null || fNameInput.value === "") {
@@ -71,9 +75,9 @@
             employeeEmail: emailInput.value,
             employeeTeam: "Intern",
             employeeAddress: {
+                "streetName": addressInput.value,
                 "city": cityInput.value,
                 "state": stateInput.value,
-                "streetName": addressInput.value,
                 "zipcode": zipCodeInput.value
             },
             employeeStatus: true,
@@ -89,6 +93,7 @@
     //this function should send the validated user data to the server as obj in body but for some reason it's sending it as key-value pair in the link
 
     function sendUser(user) {
+        console.log(JSON.stringify(user))
         fetch('/api/employees/', {
                 method: 'POST',
                 headers: {
@@ -107,16 +112,75 @@
 <html lang="en">
 
     <head>
-        <meta charset="UTF-8">
-        <title>Register Page</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Employee Management System</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 
-        <!-- Bootstrap CSS Commented out for debugging -->
-        <!--        <link href=-->
-        <!--                      "https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"-->
-        <!--              rel="stylesheet" integrity=-->
-        <!--                      "sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"-->
-        <!--              crossorigin="anonymous" />-->
+
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+            body {
+                background-color: #ededed;
+            }
+
+            .header {
+                background-color: #5d60f3;
+                color: white;
+                border-color: #7376ff !important;
+            }
+
+            .card {
+                border: none;
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            }
+
+            .btn-white {
+                background-color: white;
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+                font-weight: 600;
+                font-size: 12px;
+            }
+
+            .card-title {
+                color: #777777;
+                font-size: 15px;
+            }
+
+            .skeleton {
+                opacity: .7;
+                animation: skeleton-loading 1s linear infinite alternate;
+            }
+
+            .skeleton-text {
+                width: 100%;
+                height: 1.40rem;
+                margin-bottom: .25rem;
+                border-radius: .125rem;
+            }
+
+            .skeleton-text:last-child {
+                margin-bottom: 0;
+                width: 80%;
+            }
+
+            @keyframes skeleton-loading {
+                0% {
+                    background-color: hsl(200, 20%, 70%);
+                }
+
+                100% {
+                    background-color: hsl(200, 20%, 95%);
+                }
+            }
+
+        </style>
     </head>
 
     <body>
