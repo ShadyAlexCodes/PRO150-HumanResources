@@ -192,6 +192,7 @@ public class EmployeeRestController {
             updatedEmployee.setEmployeeLastName(employee.getEmployeeLastName());
             updatedEmployee.setEmployeeAddress(employee.getEmployeeAddress());
             updatedEmployee.setEmployeeSalary(employee.getEmployeeSalary());
+            updatedEmployee.setEmployeeStatus(employee.getEmployeeStatus());
             updatedEmployee.setEmployeeTeam(employee.getEmployeeTeam());
             updatedEmployee.setModifiedDate(LocalDateTime.now().toString());
             return new ResponseEntity<>(employeeRepo.save(updatedEmployee), HttpStatus.OK);
@@ -237,14 +238,12 @@ public class EmployeeRestController {
                 String address = faker.name().firstName();
                 boolean status = faker.bool().bool();
 
-                createEmployee(new Employee(firstName, lastName, salary, email, position, new Address(faker.address().streetName(), faker.address().city(), faker.address().state(), faker.address().zipCode()), status));
+                //createEmployee(new Employee(firstName, lastName, salary, email, position, new Address(faker.address().streetName(), faker.address().city(), faker.address().state(), faker.address().zipCode()), status));
             }
             return new ResponseEntity<>(HttpStatus.OK);
 
         } catch (Exception exception) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-
     }
 }

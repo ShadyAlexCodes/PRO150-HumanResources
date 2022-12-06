@@ -27,46 +27,6 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String employeeFirstName, String employeeLastName) {
-        this.employeeFirstName = employeeFirstName;
-        this.employeeLastName = employeeLastName;
-        this.employeeStatus = true;
-        this.createdDate = LocalDateTime.now().toString();
-    }
-
-    // private String[] positions;
-
-    public Employee(String employeeFirstName, String employeeLastName, Address employeeAddress) {
-        this.employeeFirstName = employeeFirstName;
-        this.employeeLastName = employeeLastName;
-        this.employeeAddress = employeeAddress;
-        this.createdDate = LocalDateTime.now().toString();
-    }
-
-    public Employee(String id, String employeeFirstName, String employeeLastName, double employeeSalary, Address employeeAddress, String employeeTeam, boolean employeeStatus) {
-        this.id = id;
-        this.employeeFirstName = employeeFirstName;
-        this.employeeLastName = employeeLastName;
-        this.employeeSalary = employeeSalary;
-        this.employeeTeam = employeeTeam;
-        this.employeeAddress = employeeAddress;
-        this.employeeStatus = employeeStatus;
-        this.createdDate = LocalDateTime.now().toString();
-        this.modifiedDate = "Never";
-    }
-
-    public Employee(String employeeFirstName, String employeeLastName, double employeeSalary, String employeeEmail, String employeeTeam, Address employeeAddress, boolean employeeStatus) {
-        this.employeeFirstName = employeeFirstName;
-        this.employeeLastName = employeeLastName;
-        this.employeeSalary = employeeSalary;
-        this.employeeEmail = employeeEmail;
-        this.employeeTeam = employeeTeam;
-        this.employeeAddress = employeeAddress;
-        this.employeeStatus = employeeStatus;
-        this.createdDate = LocalDateTime.now().toString();
-        this.modifiedDate = "Never";
-    }
-
     public String getEmployeeEmail() {
         return employeeEmail;
     }

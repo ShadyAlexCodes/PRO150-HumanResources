@@ -3,17 +3,15 @@
 <script>
     function validation() {
         //user info
-        var fNameInput = document.getElementById("fName");
-        var lNameInput = document.getElementById("lName");
-        var pwdInput = document.getElementById("pwd");
-        var pwdConfirmInput = document.getElementById("pwdConfirm")
+        var fNameInput = document.getElementById("firstName");
+        var lNameInput = document.getElementById("lastName");
         var emailInput = document.getElementById("email");
 
         //address info
         var addressInput = document.getElementById("address");
         var cityInput = document.getElementById("city");
         var stateInput = document.getElementById("state")
-        var zipCodeInput = document.getElementById("zipCode")
+        var zipCodeInput = document.getElementById("zipcode")
 
         //first name input not null validation
         if (fNameInput.value == null || fNameInput.value === "") {
@@ -90,14 +88,15 @@
 
     function sendUser(user) {
         fetch('/api/employees/', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json, text/plain, */*',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(user)
-            }).then(response => response.json())
-            .then(response => console.log(response))
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json, text/plain, */*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        }).then(response => response.json())
+            .then(response =>
+                window.location.href = 'index.html')
             .catch(error => console.log(error));
     }
 
@@ -106,90 +105,262 @@
 
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <title>Register Page</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Employee Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 
-        <!-- Bootstrap CSS Commented out for debugging -->
-        <!--        <link href=-->
-        <!--                      "https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"-->
-        <!--              rel="stylesheet" integrity=-->
-        <!--                      "sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"-->
-        <!--              crossorigin="anonymous" />-->
-    </head>
 
-    <body>
-        <H1>Register Page</H1>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
-        <ul>
-            <text>temporary nav bar</text>
-            <li><a href="index.html">Home</a></li>
-        </ul>
+        body {
+            background-color: #ededed;
+        }
 
-        <div class="d-flex justify-content-evenly">
-            <!--        <form method="post" onsubmit="return validateNotNull()">-->
-            <!--
-        for="fname" and id="fname" associate the label with the input
-        while name="fname" is what user input since fname is a text input
-        -->
-            <label for="fname" class="form-label">First name</label>
-            <input type="text" id="fName" name="fname" placeholder="First Name" class="form-control" required><br>
-            <!-- <br> is \n for html-->
+        .header {
+            background-color: #5d60f3;
+            color: white;
+            border-color: #7376ff !important;
+        }
 
-            <label for="lname" class="form-label">Last name</label>
-            <input type="text" id="lName" name="lname" placeholder="Last Name" class="form-control" required><br>
+        .card {
+            border: none;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        }
 
-            <label for="email" class="form-label">Email</label>
-            <input type="text" id="email" name="email" placeholder="E-mail" class="form-control" required><br>
+        .btn-white {
+            background-color: white;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            font-weight: 600;
+            font-size: 12px;
+        }
 
-            <label for="address" class="form-label">Address</label>
-            <input type="text" id="address" name="address" placeholder="Address" class="form-control" required><br>
+        .card-title {
+            color: #777777;
+            font-size: 15px;
+        }
 
-            <label for="city" class="form-label">City</label>
-            <input type="text" id="city" name="city" placeholder="City" class="form-control" required><br>
+        .skeleton {
+            opacity: .7;
+            animation: skeleton-loading 1s linear infinite alternate;
+        }
 
-            <label for="state" class="form-label">State</label>
-            <input type="text" id="state" name="state" placeholder="State" class="form-control" required><br>
+        .skeleton-text {
+            width: 100%;
+            height: 1.40rem;
+            margin-bottom: .25rem;
+            border-radius: .125rem;
+        }
 
-            <label for="zipCode" class="form-label">Zip-Code</label>
-            <input type="text" id="zipCode" name="zipCode" placeholder="Zip Code" class="form-control" required><br>
+        .skeleton-text:last-child {
+            margin-bottom: 0;
+            width: 80%;
+        }
 
-            <!--            <label for="pwd" class="form-label">Password</label>-->
-            <!--            <input-->
-            <!--                    type="password"-->
-            <!--                    id="pwd"-->
-            <!--                    class="form-control"-->
-            <!--                    placeholder="Password"-->
-            <!--                    aria-describedby="passwordHelpBlock"-->
-            <!--            >-->
+        @keyframes skeleton-loading {
+            0% {
+                background-color: hsl(200, 20%, 70%);
+            }
 
-            <!--            <div id="passwordHelpBlock" aria-placeholder="Confirm Password" class="form-text">-->
-            <!--                Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.-->
-            <!--            </div><br>-->
+            100% {
+                background-color: hsl(200, 20%, 95%);
+            }
+        }
 
-            <!--            <label for="pwdConfirm" class="form-label">Confirm Password</label>-->
-            <!--            <input-->
-            <!--                    type="password"-->
-            <!--                    id="pwdConfirm"-->
-            <!--                    name="pwdConfirm"-->
-            <!--                    class="form-control"-->
-            <!--                    placeholder="Enter Password Again"-->
-            <!--                    required-->
-            <!--            ><br><br>-->
+    </style>
+</head>
 
-            <!--        <input type="submit" value="Submit">-->
-            <button onclick="validation()">Register</button>
 
+<body>
+<div class="container-fluid px-0">
+    <div class="header">
+        <div style="border-color: #7376ff !important;"
+             class="d-flex flex-wrap justify-content-center py-2 px-0 mb-4 border-bottom">
+            <div class="container-fluid" style="font-size: 12px;">
+                <div class="row">
+                    <div class="col-5 d-flex align-items-center">
+                        <p class="text-white text-left align-items-center m-0">Employee Management System -
+                            PRO150
+                        </p>
+                    </div>
+                    <div class="col-7">
+                        <div class="text-end align-items-center">
+                            <div class="ms-3">
+                                <p class="fw-bold mb-1">Lorem Ipsum</p>
+                                <p class="text-white mb-0">${employee.employeeEmail}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
 
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-8 d-flex align-items-center">
+                    <div class="ms-2">
+                        <h3 id="empName">Creating A User <span class="skeleton skeleton-text"></span></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <!--    Commented out for debugging-->
-        <!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"-->
-        <!--            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"-->
-        <!--            crossorigin="anonymous"-->
-        <!--    ></script>-->
+    <div class="container">
+        <section class="mb-4" style="margin-top: -22px">
+            <div class="d-flex flex-wrap justify-content-center mb-md-0 me-md-auto ">
+                <div class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                    <button class="btn btn-white"><i class="fa fa-user p-2" aria-hidden="true"></i>
+                        My Profile
+                    </button>
+                </div>
+                <ul class="nav">
+                    <button class="btn btn-white m-1" onclick="window.location.href='index.html'"><i
+                            class="fa fa-address-book p-2" aria-hidden="true"></i>
+                        Employees
+                    </button>
+                    <button class="btn btn-white m-1"><i class="fa fa-users p-2" aria-hidden="true"></i>
+                        Teams
+                    </button>
+                    <button class="btn btn-white m-1"><i class="fa fa-line-chart p-2" aria-hidden="true"></i>
+                        Analytics
+                    </button>
+                </ul>
+            </div>
+        </section>
 
-    </body>
+        <div class="container my-5 px-0">
+            <div class="row">
+                <div class="col-12">
+                    <h3>General Information</h3>
+
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <label for="firstName" class="form-label">First name</label>
+                            <input type="text" class="form-control" id="firstName" placeholder="" value=""
+                                   required="">
+                            <div class="invalid-feedback">
+                                Valid first name is required.
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <label for="lastName" class="form-label">Last name</label>
+                            <input type="text" class="form-control" id="lastName" placeholder="" value=""
+                                   required="">
+                            <div class="invalid-feedback">
+                                Valid last name is required.
+                            </div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="you@example.com">
+                            <div class="invalid-feedback">
+                                Please enter a valid email address for shipping updates.
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="address" placeholder="1234 Main St"
+                                   required="">
+                            <div class="invalid-feedback">
+                                Please enter your shipping address.
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-5">
+                            <label for="city" class="form-label">City</label>
+                            <input type="text" class="form-control" id="city" placeholder="" required="">
+                            <div class="invalid-feedback">
+                                Please select a valid city.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="state" class="form-label">State</label>
+                            <input type="text" class="form-control" id="state" placeholder="" required="">
+
+                            <div class="invalid-feedback">
+                                Please provide a valid state.
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="zipcode" class="form-label">Zip</label>
+                            <input type="text" class="form-control" id="zipcode" placeholder="" required="">
+                            <div class="invalid-feedback">
+                                Zip code required.
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="my-4">
+                    <h3>Position Information</h3>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label for="salary" class="form-label">Salary</label>
+                            <input type="text" class="form-control" id="salary" placeholder="" required="">
+
+                            <div class="invalid-feedback">
+                                Please provide a valid salary.
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="position" class="form-label">Position</label>
+                            <select required id="position" name="position" class="form-control">
+                                <option value="Intern">Intern</option>
+                                <option value="Associate">Associate</option>
+                                <option value="Facilitator">"Facilitator"</option>
+                                <option value="Junior">Junior</option>
+                                <option value="Senior">Senior</option>
+                                <option value="Manager">Manager</option>
+                                <option value="Executive">Executive</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please provide a valid position.
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label for="isActive" class="form-label">Employee Status</label>
+                            <br/>
+                            <input type="checkbox" class="form-check-input" id="isActive">
+                            <label for="isActive" class="form-label">Toggle Status</label>
+                            <div class="invalid-feedback">
+                                Please provide a valid position.
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="my-4">
+
+                    <button class="w-100 btn btn-primary btn-lg" onclick="validation()">Register</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous">
+</script>
+</body>
 
 </html>
