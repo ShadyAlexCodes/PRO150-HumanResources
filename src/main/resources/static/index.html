@@ -186,21 +186,21 @@
                 <td>$${employee.employeeSalary}</td>
 
                 <td>
-                    <span class="badge ${status} rounded-pill">${statusMsg}</span>
+                    <span class="badge ${status}">${statusMsg}</span>
                 </td>
 
                 <td>
                                     <button
                             type="button"
                             onclick="window.location.href = 'edit.html?id=${employee.id}'"
-                            class="btn btn-secondary btn-sm btn-rounded"
+                            class="btn btn-outline-secondary btn-sm btn-rounded"
                     >
                         <i class="fa fa-wrench" aria-hidden="true"></i>
                     </button>
 
                     <button
                             type="button"
-                            class="btn btn-danger btn-sm btn-rounded"
+                            class="btn btn-outline-danger btn-sm btn-rounded"
                             onclick="deleteUser('${employee.id}')"
                             >
                             <i class="fa fa-trash" aria-hidden="true"></i>
@@ -403,7 +403,7 @@
             <div class="col-3">
                 <div class="card">
                     <div class="card-body">
-                        <p class="fw-bold card-title mb-1">Lorem Ipsum</p>
+                        <p class="fw-bold card-title mb-1">Average Income</p>
                         <p id="averageincome" class="fw-bold mb-0"></p>
                     </div>
                 </div>
